@@ -15,13 +15,15 @@ enableEmoji = true
   # See the config.toml file from this documentation site to have an example.
   #editURL = ""
   # Author of the site, will be used in meta information
-  author = "James Bland"
+  author = "Young Jeong, Andrew Park, Yaniv Bossem"
   # Description of the site, will be used in meta information
-  description = "AWS Modernization Workshop"
+  description = "AWS Modernization Workshop - Snyk & Docker"
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = true
   # Disable search function. It will hide search bar
   disableSearch = false
+  # Disable Home button.
+  disableLandingPageButton = true
   # Javascript and CSS cache are automatically busted when new version of site is generated. 
   # Set this to true to disable this behavior (some proxies don't handle well this optimization)
   disableAssetsBusting = false
