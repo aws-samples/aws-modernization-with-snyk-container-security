@@ -11,8 +11,9 @@ weight = 1
 ### Recap on what you have learned
 Today we've learned:
 
-+ Use Docker
-+ Use Snyk
++ To scan Docker application using Docker CLI for vulnerabilities
++ Apply Continuous Integration with Snyk and Docker
++ Observe DevSecOps with Snyk and AWS Code* Services
 
 ### Final Thoughts
 We hope you have seen some of the wins your organization can have while using Docker and Snyk. Reach out if you have any questions via https://github.com/aws-samples/aws-modernization-snyk-docker/issues/new.
