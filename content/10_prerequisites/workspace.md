@@ -35,9 +35,9 @@ Make sure you are naming your Cloud9 environment `Docker-Workshop`, otherwise th
 
     |    Environment Setting   |   Value    |
     |----------|--------------------|
-    | Envrionment Type | Ubuntu Server 18.04 LTS |
+    | Envrionment Type | (Leave as default) |
     | Instance Type | t3.large |
-    | Platform | (Leave as default)|
+    | Platform | Ubuntu Server 18.04 LTS |
     | Cost-Saving settings | (Leave as default)|
     | IAM Role | (Leave as default) |
 4. Click **Next Step** and then  **Create Environment**

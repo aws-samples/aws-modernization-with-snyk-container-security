@@ -9,18 +9,18 @@ Your Cloud9 environment comes prebuilt with a version of Docker that doesn't hav
 
 1. Open the terminal on Cloud9 and run the following: 
 
-```
-sudo apt  install jq -y
-curl -L -o docker-linux-amd64.tar.gz https://github.com/docker/compose-cli/releases/download/v1.0.10/docker-linux-amd64.tar.gz
-tar xzf docker-linux-amd64.tar.gz
-chmod +x docker/docker
-which docker
-sudo ln -s $(which docker) /usr/local/bin/com.docker.cli
-./docker/docker --context default ps
-sudo mv docker/docker /usr/local/bin/docker
+```sh
+sudo apt install jq -y
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get update -y
+sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+sudo echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null    
+sudo apt-get update -y
+sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+sudo usermod -aG docker vagrant
 docker version
 docker compose
-
 ```
 
 You should receive results as follows
