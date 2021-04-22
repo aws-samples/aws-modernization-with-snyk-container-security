@@ -11,3 +11,4 @@ weight = 21
 ### Introduction
 
 In this module we will learn how to scan for vulnerabilities within your Docker images using built-in Docker CLI vulnerability detection and fixes, powered by Snyk.
+
