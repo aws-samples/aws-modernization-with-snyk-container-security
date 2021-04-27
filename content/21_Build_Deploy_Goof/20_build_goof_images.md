@@ -20,7 +20,13 @@ To build the container image, run the following commands:
 docker build -t $DockerId/goof:latest .
 ```
 
-When the build process completes, push the image to Docker Hub.
+When the build process completes, we want to push the image to Docker Hub. First, log in to Docker Hub by running the following command:
+
+```sh
+docker login -u $DockerId
+```
+
+Enter your password when prompted. Once authenticated, push the image to Docker Hub.
 
 ```sh
 docker push $DockerId/goof:latest
