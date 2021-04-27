@@ -1,7 +1,7 @@
 +++
 title = "Step 9: Monitor your Repo with Snyk"
 chapter = false
-weight = 21
+weight = 10
 +++
 
 ## Integrate Snyk with the Goof GitHub Repo
