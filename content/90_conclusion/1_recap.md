@@ -11,9 +11,9 @@ weight = 1
 ### Recap on what you have learned
 Today we've learned:
 
-+ To scan Docker application using Docker CLI for vulnerabilities
-+ Apply Continuous Integration with Snyk and Docker
-+ Observe DevSecOps with Snyk and AWS Code* Services
++ The kinds of invisible risks present in seemingly innocent applications
++ How to scan Docker images for Base Image vulnerabilities using the Docker CLI 
++ Identifying and fixing Application Vulnerabilities using Snyk
 
 ### Final Thoughts
 We hope you have seen some of the wins your organization can have while using Docker and Snyk. Reach out if you have any questions via https://github.com/aws-samples/aws-modernization-snyk-docker/issues/new.

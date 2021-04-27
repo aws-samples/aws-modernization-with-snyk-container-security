@@ -12,16 +12,15 @@ weight: 1
 
 ### Welcome!
 
-In this workshop you will learn how to scan containerized applications on Amazon ECS using the new Docker Compose CLI tool developed in partnership with AWS and Docker. We will also learn about Continuous Integration with Snyk and Docker, as well as DevSecops using Snyk on AWS Code* Services.
+In this workshop you will learn how to scan containerized applications on Amazon EKS using the Docker CLI tool developed in partnership with Snyk and Docker. We will learn about Open Source vulnerabilities introduced by your Container Base Image and your application dependencies. 
 
 Docker is an open platform for developing, shipping, and running applications. Docker enables you to separate your applications from your infrastructure so you can deliver software quickly. With Docker, you can manage your infrastructure in the same ways you manage your applications. By taking advantage of Docker’s methodologies for shipping, testing, and deploying code quickly, you can significantly reduce the delay between writing code and running it in production.
 
 Snyk is a Cloud Native Application Security solution that enables developers and security teams to find and automatically fix vulnerabilities in your source code, Infrastructure as code templates, container images, kubernetes applications, and open source artifacts.
 
 ### Learning Objectives
-- Scan Docker application using Docker CLI for vulnerabilities
-- Continuous Integration with Snyk and Docker
-- DevSecOps with Snyk and AWS Code* Services
+- Scan Docker images for vulnerabilities using the Docker CLI
+- Integrating Snyk into your SCM system to find and fix Open Source vulnerabilities
 
 ## Who should take this workshop?
 - Developers 
