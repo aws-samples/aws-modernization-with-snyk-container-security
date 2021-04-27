@@ -1,7 +1,7 @@
 ---
 title: "Create a Docker Account"
 chapter: false
-weight: 20
+weight: 21
 ---
 {{% notice info %}}
  If you have already have an Docker ID, the you can skip this section.

@@ -1,5 +1,5 @@
 +++
-title = "Module 1"
+title = "Module 1: Build the Goof application"
 chapter = true
 weight = 21
 +++

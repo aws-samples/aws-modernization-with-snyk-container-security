@@ -1,7 +1,7 @@
 +++
-title = "Step 11: Verify the Vulnerability is no longer exploitable."
+title = "Step 12: Verify the Vulnerability is no longer exploitable."
 chapter = false
-weight = 21
+weight = 40
 +++
 
 ## Update your Cloud9 working branch

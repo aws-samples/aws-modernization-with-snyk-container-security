@@ -1,5 +1,5 @@
 +++
-title = "Module 2"
+title = "Module 2: Secure the Containers"
 chapter = true
 weight = 31
 +++
