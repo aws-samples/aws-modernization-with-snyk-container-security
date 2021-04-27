@@ -28,14 +28,15 @@ kubectl create ns snyk-docker-aws
 kubectl config set-context --current --namespace snyk-docker-aws
 
 # Spin up the goof deployment and service
-kubectl create -f goof-deployment.yaml,goof-mongo-deployment.yaml
+kubectl create -f goof-deployment.yaml,goof-service.yaml
 ```
 
 To check the status of the pods as the application comes up, use the following command:
 
 ```sh
-kubectl get pods
+kubectl get all
 ```
 
 #TODO: Add the EKS endpoint where the app is accessible.
+
 Once both are running, the application should now be accessible in <<<URL>>>. Success!

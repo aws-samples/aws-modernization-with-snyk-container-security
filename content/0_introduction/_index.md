@@ -9,7 +9,6 @@ weight: 1
 ![Snyk] (/images/snyk-card.png)
 ![Docker] (/images/docker-cloud-twitter-card.png)
 
-
 ### Welcome!
 
 In this workshop you will learn how to scan containerized applications on Amazon EKS using the Docker CLI tool developed in partnership with Snyk and Docker. We will learn about Open Source vulnerabilities introduced by your Container Base Image and your application dependencies. 
@@ -29,3 +28,5 @@ Snyk is a Cloud Native Application Security solution that enables developers and
 - Site Reliability Engineers (SRE's)
 - Anyone that loves containers and wants to learn more!
 
+## Expected Duration
+This workshop is broken up into three 30 minute modules. 
