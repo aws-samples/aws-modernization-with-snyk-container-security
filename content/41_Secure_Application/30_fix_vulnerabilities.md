@@ -1,7 +1,7 @@
 +++
 title = "Step 11: Fix a vulnerability with a Snyk Pull Request"
 chapter = false
-weight = 21
+weight = 30
 +++
 
 ## Fix the vulnerability using a Snyk Pull Request
