@@ -10,4 +10,4 @@ weight = 41
 
 ### Introduction
 
-Besides vulnerabilities introduced by the Container Base Image, Snyk can also identify vulnerabilities introduced by the Open Source components in the application. In this module we will learn about Security issues introduced by Open Source dependencies and how to address them with Snyk.
+Besides vulnerabilities in the Container Base Image, Snyk also identifies vulnerabilities introduced by the Open Source components in the application. In this module we will learn about Security issues introduced by Open Source dependencies and how to address them with Snyk.
