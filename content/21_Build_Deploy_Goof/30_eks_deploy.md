@@ -4,12 +4,19 @@ chapter = false
 weight = 21
 +++
 
-## Deploy Goof to EKS
+### Deploy Goof to EKS
 
 For this workshop we created an Amazon EKS cluster where we run the Goof app. Before deploying the app, you'll need to make a change to the app's deployment manifest. Open the file goof-deployment.yaml in the Cloud9 Editor.
 
 Find these lines, and insert your Docker ID where indicated (there are two locations: one for each image).
 
+```
+spec:
+  containers:
+  - image: <<DOCKERID>>/goof:latest #Edit with your Docker Hub ID
+    name: goof
+    imagePullPolicy: Always
+```
 ```
 spec:
   containers:
