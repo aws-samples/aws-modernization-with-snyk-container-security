@@ -15,7 +15,10 @@ kubectl scale deployment goof --replicas=1
 
 ## Run the ImageMagick Exploit again to verify the fix.
 
-#TODO: Eric S to add ImageMagick instructions from 10_container_exploit.md
+Like before, run the following:
+```bash
+curl -F 'twitter_picture=@rce1.jpg' http://localhost:3112/upload http://$GOOF_IMAGE_LB//
+```
 
 We can see that the imagemagick exploit no longer works, and our container image is more secure than it was when we started. 
 

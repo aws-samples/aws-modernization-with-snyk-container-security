@@ -8,7 +8,7 @@ weight = 21
 
 To apply a new base image, open the Dockerfile in Cloud9 and replace, or comment out, the old base image with a new one. In this example, we'll use node:10.23.1.
 
-#TODO: Make a code box.
+```
 FROM node:10.23.1
 
 RUN mkdir /usr/src/goof
@@ -21,6 +21,7 @@ RUN npm install
 EXPOSE 3001
 EXPOSE 9229
 ENTRYPOINT ["npm", "start"]
+```
 
 When ready, save the changes.
 

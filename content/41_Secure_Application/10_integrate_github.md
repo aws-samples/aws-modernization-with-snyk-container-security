@@ -6,25 +6,22 @@ weight = 10
 
 ## Integrate Snyk with the Goof GitHub Repo
 
-To check for issues in the Open Source dependencies, we'll use the Snyk GitHub integration. 
+To check for issues in the application's Open Source dependencies, we use the Snyk GitHub integration to connect Snyk to the application's GitHub Repository.
 
-First we need to connect Snyk to GitHub so we can import our Repository.
-
-#TODO: Make this a pretty list.
-Logging in to [Snyk.io](snyk.io). Sign up if you haven't already.
-Navigating to Integrations -> Source Control -> GitHub
-Fill in your Account Credentials to Connect your GitHub Account.
+1. Log in to [Snyk.io](snyk.io). Sign up if you haven't already.
+2. Navigate to Integrations -> Source Control -> GitHub
+3. Fill in your Account Credentials to Connect your GitHub Account.
 
 ## Import the Goof Repo into Snyk
 
 Now that Snyk is connected to your GitHub Account, import the Repo into Snyk as a Project.
 
-#TODO: Make this a pretty list.
-Navigate to Projects
-Click "Add Project" then select "GitHub"
-Click on the Repo you created.
+1. Click on Projects
+2. Click "Add Project" then select "GitHub"
+3. Click on the Repo for the Goof application.
 
 ## Review the list of Vulnerabilities
 
 When the import completes, Snyk displays the issue counts next to the files that introduced the issues. Issues in the Open Source components in our Goof app are displayed next to the `package.json` file.
 
+Before fixing any of these, let's explore an example of the invisible risks Open Source components can bundle into our application.
