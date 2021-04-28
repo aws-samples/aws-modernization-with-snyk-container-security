@@ -6,7 +6,7 @@ weight = 21
 
 ## Build Docker images
 
-Now that you've cloned the repo to your working environment, we'll build the container image that runs our application in Amazon Elastic Kubernetes Service (EKS).
+Now that you've cloned the repo to your working environment, we'll build a pair of container images that run our application in Amazon Elastic Kubernetes Service (EKS).
 
 To copy-paste the commands in the instructions set an environment variable with your Docker ID. 
 
@@ -14,22 +14,27 @@ To copy-paste the commands in the instructions set an environment variable with 
 DockerId=<your_docker_id>
 ```
 
-To build the container image, run the following commands:
+To build the container images, run the following commands (assuming you are cd'ed into the cloned goof repo directory):
 
 ```sh
+cd image-app
+docker build -t $DockerId/goof-image:latest .
+
+cd ..
 docker build -t $DockerId/goof:latest .
 ```
 
-When the build process completes, we want to push the image to Docker Hub. First, log in to Docker Hub by running the following command:
+When both of the build processes are complete, we want to push the images to Docker Hub. First, log in to Docker Hub by running the following command:
 
 ```sh
 docker login -u $DockerId
 ```
 
-Enter your password when prompted. Once authenticated, push the image to Docker Hub.
+Enter your password when prompted. Once authenticated, push the images to Docker Hub.
 
 ```sh
+docker push $DockerId/goof-image:latest
 docker push $DockerId/goof:latest
 ```
 
-Once the push completes, [log in to Docker Hub](https://hub.docker.com/repositories) to see your new image repository. 
+Once the pushes complete, [log in to Docker Hub](https://hub.docker.com/repositories) to see your new image repositories. 
