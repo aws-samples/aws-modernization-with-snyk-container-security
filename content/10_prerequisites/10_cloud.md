@@ -22,15 +22,27 @@ Cloud9 normally manages IAM credentials dynamically. However, for the purpose of
 
 
       ```sh
-      sudo pip install --upgrade awscli && hash -r
-      sudo apt update
-      sudo apt install jq gettext bash-completion moreutils -y
       rm -vf ${HOME}/.aws/credentials
       export ACCOUNT_ID=$(aws sts get-caller-identity --output text --query Account)
-      export STS_RESPONSE=$(aws sts assume-role --role-arn arn:aws:iam::${ACCOUNT_ID}:role/Docker-Workshop-Admin --role-session-name $(uuidgen) --duration-seconds 3600)
-      export AWS_ACCESS_KEY_ID=$(echo $STS_RESPONSE | jq .Credentials.AccessKeyId | tr -d \")
-      export AWS_SECRET_ACCESS_KEY=$(echo $STS_RESPONSE | jq .Credentials.SecretAccessKey | tr -d \")
-      export AWS_SESSION_TOKEN=$(echo $STS_RESPONSE | jq .Credentials.SessionToken | tr -d \")
       export AWS_DEFAULT_REGION=us-east-1
-      
       ```
+
+5. The last thing we need to do in order to complete this step is to update our kubeconfig file so that we have access to our EKS cluster
+      
+      ```sh
+      aws eks update-kubeconfig --name basic-eks --region us-east-1
+      ```
+
+6. Confirm that you have access to your EKS cluster by running the following command
+
+      ```sh
+      kubectl get nodes
+      ```
+      If you have access you should see the following
+
+         ```
+         NAME                        STATUS   ROLES    AGE   VERSION
+         ip-10-0-17-2.ec2.internal   Ready    <none>   21h   v1.18.9-eks-d1db3c
+         ```
+
+In the next step we will go ahead and create a Snyk account
