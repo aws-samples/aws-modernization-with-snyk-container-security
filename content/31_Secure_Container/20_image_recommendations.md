@@ -42,7 +42,57 @@ To:
 ```docker
 FROM node:6
 ```
-## TODO this page WIP
+
+Now, rebuild the image:
+```bash
+cd image-app
+docker build -t $DockerId/goof-image .
+```
+ ... and let's re-scan it:
+```bash
+docker scan $DockerId/goof-image --file Dockerfile
+```
+
+This time you should see a lot more information, including recommendations for upgrades to the base image:
+```text
+...
+✗ High severity vulnerability found in node
+  Description: Improper Certificate Validation
+  Info: https://snyk.io/vuln/SNYK-UPSTREAM-NODE-1243765
+  Introduced through: node@6.17.1
+  From: node@6.17.1
+  Image layer: Introduced by your base image (node:6)
+  Fixed in: 15.14.0, 14.16.1, 12.22.1, 10.24.1
+
+Organization:      eric-smalling-snyk
+Package manager:   deb
+Target file:       Dockerfile
+Project name:      docker-image|goof
+Docker image:      goof:6
+Platform:          linux/amd64
+Base image:        node:6
+Licenses:          enabled
+
+Tested 413 dependencies for known issues, found 876 issues.
+
+Base Image  Vulnerabilities  Severity
+node:6      876              228 high, 196 medium, 452 low
+
+Recommendations for base image upgrade:
+
+Major upgrades
+Base Image    Vulnerabilities  Severity
+node:14.16.1  526              55 high, 51 medium, 420 low
+
+Alternative image types
+Base Image                Vulnerabilities  Severity
+node:15.14-buster-slim    56               12 high, 5 medium, 39 low
+node:current-buster-slim  56               12 high, 5 medium, 39 low
+node:erbium-slim          70               15 high, 8 medium, 47 low
+node:15-buster            299              25 high, 43 medium, 231 low
+```
+
+If you search through 
 Snyk recommends less vulnerable base images grouped by how likely they are to be compatible:
 
 - Minor upgrades are the most likely to be compatible with little work,
