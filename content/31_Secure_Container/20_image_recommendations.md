@@ -18,10 +18,9 @@ When the scan completes, review the list of vulnerabilities. There are quite a f
 
 Snyk recommends less vulnerable base images grouped by how likely they are to be compatible:
 
-#TODO: Make a list so it looks nice.
-Minor upgrades are the most likely to be compatible with little work,
-Major upgrades can introduce breaking changes depending on image usage,
-Alternative architecture images are shown for more technical users to investigate.
+- Minor upgrades are the most likely to be compatible with little work,
+- Major upgrades can introduce breaking changes depending on image usage,
+- Alternative architecture images are shown for more technical users to investigate.
 
 Continue to the next Step to select another base image for our application.
 
