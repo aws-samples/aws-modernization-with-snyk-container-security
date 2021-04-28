@@ -36,7 +36,7 @@ Make sure you are naming your Cloud9 environment `Docker-Workshop`, otherwise th
     |    Environment Setting   |   Value    |
     |----------|--------------------|
     | Envrionment Type | (Leave as default) |
-    | Instance Type | t3.large |
+    | Instance Type | t2.large |
     | Platform | Ubuntu Server 18.04 LTS |
     | Cost-Saving settings | (Leave as default)|
     | IAM Role | (Leave as default) |
