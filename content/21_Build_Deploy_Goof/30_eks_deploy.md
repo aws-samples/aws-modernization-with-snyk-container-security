@@ -13,13 +13,6 @@ Find these lines, and insert your Docker ID where indicated (there are two locat
 ```
 spec:
   containers:
-  - image: <<DOCKERID>>/goof:latest #Edit with your Docker Hub ID
-    name: goof
-    imagePullPolicy: Always
-```
-```
-spec:
-  containers:
   - image: <<DOCKERID>>/goof-image:latest #Edit with your Docker Hub ID
     name: goof-image
     imagePullPolicy: Always
