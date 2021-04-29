@@ -9,4 +9,10 @@ weight: 21
 
 1. Log in to [Docker Hub](https://hub.docker.com?utm_source=docker&utm_medium=webinar&utm_campaign=snyk-kubecon-21-pmckee) to create a Docker ID for yourself. 
 
-2. Have your Docker ID memorized or written down nearby as you will need to use it in future steps.
+2. Save your Docker ID as an Environment Variable to use it in future steps. Your Docker ID is displayed in the upper right corner of Docker Hub.
+
+![docker-id](/images/docker-id.png)
+
+```bash
+DockerId=<<your_docker_id>>
+```

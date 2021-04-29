@@ -67,6 +67,20 @@ Server: Docker Engine - Community
   GitCommit:        de40ad0
   ```
 
+### Authenticate Cloud9 with Docker Hub 
+
+In Module 1 you'll push container images to Docker Hub. Log in to Docker Hub by running the following command:
+
+```sh
+docker login -u $DockerId
+```
+
+Enter your password when prompted. 
+
+{{% notice info %}}
+If you're using 2-Factor Authentication with Docker Hub, [generate an API Token](https://docs.docker.com/docker-hub/access-tokens/#create-an-access-token) and use that in place of your password.
+{{% /notice % }}
+
 ### Check Docker scan plugin version
 
 This workshop requres a minium of v0.8.0 of the Docker "Scan" plugin, run the following to determine which version got installed:
@@ -95,5 +109,10 @@ curl https://github.com/docker/scan-cli-plugin/releases/download/v0.8.0/docker-s
 chmod +x ~/.docker/cli-plugins/docker-scan
 ```
 
-### Accept license Configure Snyk account token
+### Configure Snyk account token
+Authenticate Docker Scan to Snyk by referencing the Environment Variable declared earlier.
+```bash
+docker scan --login --token $SNYK_TOKEN
+```
+
 You have now completed all the steps necessary to go through the workshop on your Cloud9 workspace. 

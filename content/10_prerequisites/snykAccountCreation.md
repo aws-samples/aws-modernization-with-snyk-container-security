@@ -9,5 +9,8 @@ weight: 20
 
 1. Log in to [Snyk](https://snyk.co/workshop-KubeConEU21) to create a Snyk Account for yourself. 
 
-2. Once registered, navigate to [Snyk Account Settings](https://app.snyk.io/account) and save your API Key. You'll need it later.
+2. Once registered, navigate to [Snyk Account Settings](https://app.snyk.io/account) and save your API Key as an environment variable in Cloud9. You'll need it later.
 
+```bash
+SNYK_TOKEN=<<your_snyk_token>>
+```
