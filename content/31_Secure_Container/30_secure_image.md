@@ -35,5 +35,10 @@ docker build -t $DockerId/goof-image:latest .
 docker push $DockerId/goof-image:latest
 ```
 
-In the next step we'll re-deploy the application to EKS and test the exploit to verify a fix.
+After the push completes, return to the repository's root directory.
 
+```sh
+cd ..
+```
+
+In the next step we'll re-deploy the application to EKS and test the exploit to verify a fix.
