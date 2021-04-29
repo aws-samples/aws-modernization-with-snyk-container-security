@@ -29,6 +29,6 @@ Now that Snyk is connected to your GitHub Account, import the Repo into Snyk as 
 
 When the import completes, Snyk displays the issue counts next to the files that introduced the issues. Issues in the Open Source components in our Goof app are displayed next to the `package.json` file.
 
+![snyk-project-list](/images/snyk-project-list.png)
 
-
-Before fixing any of these, let's explore an example of the invisible risks Open Source components can bundle into our application.
+Before investigating the issues, let's explore an example of the invisible risks Open Source components can bundle into our application.
