@@ -79,7 +79,7 @@ Enter your password when prompted.
 
 {{% notice info %}}
 If you're using 2-Factor Authentication with Docker Hub, [generate an API Token](https://docs.docker.com/docker-hub/access-tokens/#create-an-access-token) and use that in place of your password.
-{{% /notice % }}
+{{% /notice %}}
 
 ### Check Docker scan plugin version
 
