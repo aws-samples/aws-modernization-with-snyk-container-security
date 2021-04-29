@@ -30,7 +30,7 @@ docker version
 
 - Going back to the terminal, run `install-docker.sh` using the command bellow.
 ```bash
-$ ./install-docker.sh 20
+$ ./install-docker.sh
 ```
 
 ### Verify successful installation
