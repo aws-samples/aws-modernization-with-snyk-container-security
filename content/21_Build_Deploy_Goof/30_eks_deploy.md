@@ -77,6 +77,11 @@ GOOF_LB=$(kubectl get svc goof -o jsonpath='{.status.loadBalancer.ingress[0].hos
 GOOF_IMAGE_LB=$(kubectl get svc goof-image -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 ```
 
-Once both are running, the application should now be accessible at http://$GOOF_LB 
+Once both are running, the application is accessible from the web. Get the DNS name for your app running the following command. 
 
-Success!
+```bash
+echo $GOOF_LB 
+echo $GOOF_IMAGE_LB 
+``` 
+
+Success! Our application is now live on EKS. We can open and interact with it, and it looks harmless enough! In the next module we'll demonstrate how a vulnerable open source compoenent creates an invisible risk that can comprimise our application.
