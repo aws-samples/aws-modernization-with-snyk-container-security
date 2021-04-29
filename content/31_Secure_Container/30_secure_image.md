@@ -33,8 +33,8 @@ When ready, save the changes.
 Now build and push the container to Docker Hub.
 
 ```sh
-docker build -t $DockerId/goof:dev .
-docker push $DockerId/goof:dev
+docker build -t $DockerId/goof-image:latest .
+docker push $DockerId/goof-image:latest
 ```
 
 In the next step we'll re-deploy the application to EKS and test the exploit to verify a fix.
