@@ -74,7 +74,13 @@ This workshop requres a minium of v0.8.0 of the Docker "Scan" plugin, run the fo
 docker scan --version
 ```
 
-You should see something similar to the following:
+#### Snyk consent prompt
+Since this is the first time you are using the `docker scan` command on this installation, you will be prompted to consent to using Snyk.  Simply press "Y" to accept Snyks [terms of use](https://snyk.io/policies/terms-of-service/).
+```
+Docker Scan relies upon access to Snyk, a third party provider, do you consent to proceed using Snyk? (y/N)
+```
+
+Next you should see something similar to the following:
 ```
 Version:    v0.8.0
 Git commit: 35651ca
@@ -89,4 +95,5 @@ curl https://github.com/docker/scan-cli-plugin/releases/download/v0.8.0/docker-s
 chmod +x ~/.docker/cli-plugins/docker-scan
 ```
 
+### Accept license Configure Snyk account token
 You have now completed all the steps necessary to go through the workshop on your Cloud9 workspace. 
