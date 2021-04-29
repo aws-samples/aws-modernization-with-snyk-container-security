@@ -9,7 +9,7 @@ weight = 21
 Now that we verified a fix, let's save our work. Use `git` to push our code changes to GitHub.
 
 ```sh
-git add Dockerfile
+git add -u
 git commit -m "new base image to fix imagemagick vulnerability"
 git push
 ```
