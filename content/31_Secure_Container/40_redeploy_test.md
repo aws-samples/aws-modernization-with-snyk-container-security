@@ -17,7 +17,12 @@ kubectl scale deployment goof --replicas=1
 
 Like before, run the following:
 ```bash
-curl -F 'twitter_picture=@rce1.jpg' http://localhost:3112/upload http://$GOOF_IMAGE_LB//
+curl -F 'twitter_picture=@rce1.jpg' http://$GOOF_IMAGE_LB:3112/upload
+```
+
+And then verify it by checking the container's filesystem:
+```bash
+kubectl exec -it $(kubectl get pod -l app=goof,tier=frontend -o name) -- ls 
 ```
 
 We can see that the imagemagick exploit no longer works, and our container image is more secure than it was when we started. 

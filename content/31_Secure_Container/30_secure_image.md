@@ -6,10 +6,13 @@ weight = 21
 
 ## Apply a more secure Base Image
 
-To apply a new base image, open the Dockerfile in Cloud9 and replace, or comment out, the old base image with a new one. In this example, we'll use node:10.23.1.
+To apply a new base image, open the Dockerfile in Cloud9 and replace, or comment out, the old base image with a new one. In this example, we'll use `node:14.16.1`.
 
+{{% notice info %}}
+Open Source vulnerabilities are disclosed daily, so the recommendations you see may differ as the Snyk vulnerability database is constantly updated.  This example shows upgrade recommendations as of the day of writing.  The actual version numbers may differ for you.
+{{% /notice %}}
 ```
-FROM node:10.23.1
+FROM node:14.16.1
 
 RUN mkdir /usr/src/goof
 RUN mkdir /tmp/extracted_files
