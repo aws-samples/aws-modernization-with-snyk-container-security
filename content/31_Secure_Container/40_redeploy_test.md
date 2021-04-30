@@ -22,9 +22,11 @@ curl -F 'twitter_picture=@image-app/exploits/rce1.jpg' http://$GOOF_IMAGE_LB:311
 
 And then verify it by checking the container's filesystem:
 ```bash
-kubectl exec -it $(kubectl get pod -l app=goof,tier=frontend -o name) -- ls 
+kubectl exec -it $(kubectl get pod -l app=goof-image,tier=frontend -o name) -- ls 
 ```
 
 We can see that the imagemagick exploit no longer works, and our container image is more secure than it was when we started. 
 
-In the next step, we'll push our new Dockerfile to GitHub to save our work. 
+This is one example of how a vulnerable component introduced by the container base image can have serious security implications. Without scanning it for vulnerabilities, the app works and looks harmless, but can leave a security hole in your infrastructure. Well done! 
+
+In the next module, we'll demonstrate how the open source components in our application also open up security holes that can be exploited in our running application.
