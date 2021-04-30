@@ -30,7 +30,7 @@ docker version
 
 - Going back to the terminal, run `install-docker.sh` using the command bellow.
 ```bash
-$ ./install-docker.sh 20
+$ ./install-docker.sh
 ```
 
 ### Verify successful installation
@@ -67,6 +67,20 @@ Server: Docker Engine - Community
   GitCommit:        de40ad0
   ```
 
+### Authenticate Cloud9 with Docker Hub 
+
+In Module 1 you'll push container images to Docker Hub. Log in to Docker Hub by running the following command:
+
+```sh
+docker login -u $DockerId
+```
+
+Enter your password when prompted. 
+
+{{% notice info %}}
+If you're using 2-Factor Authentication with Docker Hub, [generate an API Token](https://docs.docker.com/docker-hub/access-tokens/#create-an-access-token) and use that in place of your password.
+{{% /notice %}}
+
 ### Check Docker scan plugin version
 
 This workshop requres a minium of v0.8.0 of the Docker "Scan" plugin, run the following to determine which version got installed:
@@ -74,7 +88,13 @@ This workshop requres a minium of v0.8.0 of the Docker "Scan" plugin, run the fo
 docker scan --version
 ```
 
-You should see something similar to the following:
+#### Snyk consent prompt
+Since this is the first time you are using the `docker scan` command on this installation, you will be prompted to consent to using Snyk.  Simply press "Y" to accept Snyks [terms of use](https://snyk.io/policies/terms-of-service/).
+```
+Docker Scan relies upon access to Snyk, a third party provider, do you consent to proceed using Snyk? (y/N)
+```
+
+Next you should see something similar to the following:
 ```
 Version:    v0.8.0
 Git commit: 35651ca
@@ -87,6 +107,12 @@ mkdir -p ~/.docker/cli-plugins
 mkdir -p ~/.docker/cli-plugins && \
 curl https://github.com/docker/scan-cli-plugin/releases/download/v0.8.0/docker-scan_linux_amd64 -L -s -S -o ~/.docker/cli-plugins/docker-scan &&\
 chmod +x ~/.docker/cli-plugins/docker-scan
+```
+
+### Configure Snyk account token
+Authenticate Docker Scan to Snyk by referencing the Environment Variable declared earlier.
+```bash
+docker scan --login --token $SNYK_TOKEN
 ```
 
 You have now completed all the steps necessary to go through the workshop on your Cloud9 workspace. 

@@ -8,6 +8,10 @@ weight = 21
 
 A sample application, called Goof, is provided for this workshop as a GitHub template. Navigate to the [GitHub Repo for the Goof application](https://github.com/snyk-partners/goof) and click "Use this Template" to create a copy of the Repo to your personal GitHub account. 
 
+{{% notice info %}}
+Be sure to name the new Repo `goof` otherwise things will break later on.
+{{% /notice %}}
+
 ![gh-template](/images/gh-use-template.png)
 
 To copy-paste the commands in the instructions set an environment variable with your GitHub ID. Your GitHub ID is displayed in the upper right corner in [GitHub.com](github.com).

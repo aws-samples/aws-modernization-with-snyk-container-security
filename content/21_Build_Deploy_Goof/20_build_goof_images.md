@@ -8,12 +8,6 @@ weight = 21
 
 Now that you've cloned the repo to your working environment, we'll build a pair of container images that run our application in Amazon Elastic Kubernetes Service (EKS).
 
-To copy-paste the commands in the instructions set an environment variable with your Docker ID. 
-
-```sh
-DockerId=<your_docker_id>
-```
-
 To build the container images, run the following commands (assuming you are cd'ed into the cloned goof repo directory):
 
 ```sh
