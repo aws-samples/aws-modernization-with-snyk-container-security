@@ -1,7 +1,7 @@
 ---
 title: "Resize workspace's EBS volume"
 chapter: false
-weight: 20 
+weight: 14 
 ---
 
 {{% notice warning %}}
