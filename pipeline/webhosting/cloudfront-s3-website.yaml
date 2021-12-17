@@ -28,7 +28,13 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: !Join ['', [ !Ref 'WorkshopHostname', '.', !Ref 'DomainName']]
-      AccessControl: "BucketOwnerFullControl"  
+      AccessControl: "BucketOwnerFullControl" 
+      VersioningConfiguration:
+        Status: Enabled 
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: 'AES256'
     
   WebsiteBucketPolicy:
     Type: AWS::S3::BucketPolicy
@@ -41,7 +47,16 @@ Resources:
           Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
           Principal:
             CanonicalUser: 42e93f3a60683439eed54df135350cf7b2eaca4dcdf8099cb1d74c4c185bc11ac4f2cbad48bc74b3c609eaa6b983096d
-          
+        - Action: 's3:*'  
+          Effect: Deny
+          Resource: 
+            - !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
+            - !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket']]
+          Principal: '*'
+          Condition:
+            Bool:
+              aws:SecureTransport: false
+              
   WebsiteCloudFront:
     Type: AWS::CloudFront::Distribution
     Properties:
@@ -61,6 +76,9 @@ Resources:
               Forward: none
           TargetOriginId: "S3Origin"
           ViewerProtocolPolicy: "redirect-to-https"
+          LambdaFunctionAssociations:
+            - EventType: origin-request
+              LambdaFunctionARN: arn:aws:lambda:us-east-1:497025854095:function:cloudfrontRedirectEEIndex:2
         DefaultRootObject: index.html
         Enabled: true
         HttpVersion: 'http2'
