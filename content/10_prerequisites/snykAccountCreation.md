@@ -14,3 +14,4 @@ weight: 20
 ```bash
 SNYK_TOKEN=<<your_snyk_token>>
 ```
+If you do not have a Docker account, please go to [Create a Docker Account](https://docker-snyk.awsworkshop.io/10_prerequisites/dockeracountcreation.html) step to create a Docker account as you will need one to complete this workshop.
