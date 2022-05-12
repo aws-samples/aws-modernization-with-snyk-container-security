@@ -42,9 +42,9 @@ kubectl get nodes
 You should then see the a similar output to the following that shows a list of your worker nodes. 
 
 ```bash
-ip-192-168-103-203.us-east-2.compute.internal   Ready    <none>   26h   v1.20.11-eks-f17b81
-ip-192-168-135-115.us-east-2.compute.internal   Ready    <none>   26h   v1.20.11-eks-f17b81
-ip-192-168-162-61.us-east-2.compute.internal    Ready    <none>   26h   v1.20.11-eks-f17b81
+ip-192-168-103-203.us-east-1.compute.internal   Ready    <none>   26h   v1.20.11-eks-f17b81
+ip-192-168-135-115.us-east-1.compute.internal   Ready    <none>   26h   v1.20.11-eks-f17b81
+ip-192-168-162-61.us-east-1.compute.internal    Ready    <none>   26h   v1.20.11-eks-f17b81
 ```
 
 You are now ready to move on to the next step! If you do not have a Snyk and Docker account please go to [Create a Snyk Account](https://docker-snyk.awsworkshop.io/10_prerequisites/snykaccountcreation.html) step to create a Snyk account as you will need one to complete this workshop.

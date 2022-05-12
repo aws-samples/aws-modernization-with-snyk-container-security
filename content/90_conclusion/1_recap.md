@@ -18,5 +18,3 @@ Today we've learned:
 ### Final Thoughts
 We hope you have seen some of the wins your organization can have while using Docker and Snyk. Reach out if you have any questions via https://github.com/aws-samples/aws-modernization-snyk-docker/issues/new.
 
-
-### Next Steps [TODO]
