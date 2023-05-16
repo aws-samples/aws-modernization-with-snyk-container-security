@@ -17,7 +17,7 @@ enableEmoji = true
   # Author of the site, will be used in meta information
   author = "Young Jeong, Andrew Park, Yaniv Bossem"
   # Description of the site, will be used in meta information
-  description = "AWS Modernization Workshop - Snyk & Docker"
+  description = "AWS Modernization Workshop - Snyk"
   # Shows a checkmark for visited pages on the menu
   showVisitedLinks = true
   # Disable search function. It will hide search bar
