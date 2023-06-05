@@ -1,0 +1,98 @@
++++
+title = "Step 2: Deploy the application to EKS"
+chapter = false
+weight = 22
++++
+
+
+For this workshop we created an Amazon EKS cluster where we run the Goof apps and you are now going to deploy the applications we build into it.
+
+## Create and set context to a namespace
+
+We will be running these applications in a specific namespace.
+
+```sh
+# Create a namespace
+kubectl create ns snyk-aws
+
+# Set the current context to use the new namespace
+kubectl config set-context --current --namespace snyk-aws
+```
+
+## Deploy the applications
+
+Ensure the `ECR_REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
+```
+cat manifests/*.yaml | envsubst | kubectl apply -f -
+```
+
+To check the status of the pods as the application comes up, use the following command:
+
+### Validate they are running
+```sh
+kubectl get all
+```
+The output should look something like this:
+```sh
+$ kubectl get all
+NAME                               READY   STATUS    RESTARTS   AGE
+pod/goof-7bd8895c4d-zl8ln          1/1     Running   0          19s
+pod/thumbnailer-6cc495969b-j6tkb   1/1     Running   0          19s
+
+NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP                                                               PORT(S)        AGE
+service/goof          LoadBalancer   10.100.48.151   SOME_LONG_STRING.us-east-1.elb.amazonaws.com    80:30835/TCP   19s
+service/thumbnailer   LoadBalancer   10.100.42.253   ANOTHER_LONG_STRING.us-east-1.elb.amazonaws.com   80:30594/TCP   19s
+
+NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/goof          1/1     1            1           19s
+deployment.apps/thumbnailer   1/1     1            1           19s
+
+NAME                                     DESIRED   CURRENT   READY   AGE
+replicaset.apps/goof-7bd8895c4d          1         1         1       19s
+replicaset.apps/thumbnailer-6cc495969b   1         1         1       19s
+```
+
+{{% notice info %}}
+The pods should all show **"Running"** in their **STATUS** field, and services with a **LoadBalancer** type should have an IP or hostname for their **EXTERNAL-IP**.
+<br>If either show a pending state, then wait a moment and re-run the command until they finish starting up. 
+{{% /notice %}}
+
+The following will save the `LoadBalancer` services `EXTERNAL_IP` values for later use:
+```
+THUMBNAILER_LB=$(kubectl get svc thumbnailer -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+TODOLIST_LB=$(kubectl get svc todolist -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+```
+
+Once both are running, the application is accessible from the web. Get the DNS name for your app running the following command. 
+
+```bash
+echo $THUMBNAILER_LB
+echo $TODOLIST_LB 
+``` 
+
+### Validate our Log4Shell exploit server is running
+The eagle-eyed amoung you probably noticed that only two deployments and services are shown in the above output but we built and deployed three images. Well, the third, as it's name reveals, is a Log4Shell malicious LDAP server we will be using in a later section.  We'll discuss it more in a later section, but for now, just make sure it's running by listing the deployments in the `darkweb` namespace:
+```sh
+kubectl get all -n darkweb
+```
+```sh
+$ kubectl get all -n darkweb
+NAME                            READY   STATUS             RESTARTS   AGE
+pod/log4shell-7d8c6fbfd-84l8p   1/1     Running            0          154m
+
+NAME           TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+service/evil   ClusterIP   10.100.76.31    <none>        9999/TCP   2m2s
+service/ldap   ClusterIP   10.100.69.149   <none>        80/TCP     154m
+
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/log4shell   1/1     1            1           154m
+
+NAME                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/log4shell-7d8c6fbfd   1         1         1       154m
+replicaset.apps/log4shell-fc6565dbc   1         1         0       2m2s
+```
+Note: services in this namespace will not get external ips as they are not running as a loadbalancer type.
+
+## Success!
+
+If you got here without issues, you've successfully built and deployed all of the applications and they are now live on EKS. We can open and interact with it, and while they looks harmless enough! In the next module we'll demonstrate how a vulnerable open source compoenents can create an invisible risk that can comprimise our application.
