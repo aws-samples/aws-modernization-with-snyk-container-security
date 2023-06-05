@@ -1,5 +1,5 @@
 ---
-title: "AWS Event Engine"
+title: "...at an AWS event"
 chapter: true
 weight: 10
 ---

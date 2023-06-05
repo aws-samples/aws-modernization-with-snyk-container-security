@@ -1,5 +1,5 @@
 +++
-title = "Step 9: Monitor your Repo with Snyk"
+title = "Step 6: Monitor your Repo with Snyk"
 chapter = false
 weight = 41
 +++

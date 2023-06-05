@@ -1,5 +1,5 @@
 +++
-title = "Step 12: Verify the Vulnerability is no longer exploitable."
+title = "Step 9: Verify the Vulnerability is no longer exploitable."
 chapter = false
 weight = 44
 +++

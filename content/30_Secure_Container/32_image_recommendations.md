@@ -1,5 +1,5 @@
 +++
-title = "Step 5: Scan the Container Image for Vulnerabilities"
+title = "Step 4: Scan the Container Image for Vulnerabilities"
 chapter = false
 weight = 32
 +++

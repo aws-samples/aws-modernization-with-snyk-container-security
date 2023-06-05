@@ -1,5 +1,5 @@
 +++
-title = "Step 11: Fix a vulnerability with a Snyk Pull Request"
+title = "Step 8: Fix a vulnerability with a Snyk Pull Request"
 chapter = false
 weight = 43
 +++

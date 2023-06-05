@@ -1,5 +1,5 @@
 +++
-title = "Step 6: Re-deploy the Application to test the fix"
+title = "Step 5: Re-deploy the Application to test the fix"
 chapter = false
 weight = 34
 +++
