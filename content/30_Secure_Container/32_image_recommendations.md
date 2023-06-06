@@ -74,12 +74,11 @@ FROM python:3.12.01b
 
 Now, rebuild the image:
 ```bash
-cd image-app
 docker build -t $ECR_REPO/thumbnailer .
 ```
  ... and let's re-scan it:
 ```bash
-docker scan $ECR_REPO/thumbnailer --file Dockerfile --exclude-app-vulns
+snyk container test $ECR_REPO/thumbnailer --file=Dockerfile --exclude-app-vulns
 ```
 
 The results now should show the lower vulnerability count.

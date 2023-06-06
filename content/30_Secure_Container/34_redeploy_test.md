@@ -46,8 +46,10 @@ Re-upload the encoded image:
 ```
 
 And then try to decode the result:
-```bash
-$ ./exploit.py decode result.png                                                                                                                                             
+```sh
+./exploit.py decode result.png                                                                                                                                             
+```
+```sh
 Decoding content from /home/ec2-user/environment/goof/thumbnailer/result.png...
 
 Executing: identify -verbose /home/ec2-user/environment/goof/thumbnailer/result.png

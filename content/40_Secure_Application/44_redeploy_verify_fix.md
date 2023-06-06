@@ -16,8 +16,8 @@ git pull
 Now build and push the container to ECR (make sure you are cd'ed into the todolist directory).
 
 ```sh
-docker build -t ${ECR_REPO}/todolist:latest .
-docker push ${ECR_REPO}/todolist:latest
+docker build -t $ECR_REPO/todolist:latest .
+docker push $ECR_REPO/todolist:latest
 ```
 
 ## Re-deploy the Application to EKS
