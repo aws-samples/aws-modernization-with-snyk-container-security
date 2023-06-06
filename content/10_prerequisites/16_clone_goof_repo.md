@@ -8,11 +8,16 @@ weight = 16
 
 A sample application, called Goof, is provided for this workshop as a GitHub template. Navigate to the [GitHub Repo for the Goof application](https://github.com/snyk-partners/goof) and click "Use this Template" and then "Create a new repository" to create a copy of the Repo to your personal GitHub account. 
 
+
+![gh-template](/images/gh-use-template.png)
+
 {{% notice info %}}
 Be sure to name the new Repo `goof` otherwise things will break later on.
 {{% /notice %}}
 
-![gh-template](/images/gh-use-template.png)
+We recommend you make your copy have "public" visibility, it will simplify working with it during this workshop.
+
+![gh-create-copy](/images/gh-create-copy.png)
 
 To copy-paste the commands in the instructions set an environment variable with your GitHub ID. Your GitHub ID is displayed in the upper right corner in [GitHub.com](github.com).
 
@@ -53,7 +58,7 @@ cd cloud9-setup
 The `aws` CLI tool can update our kubeconfig file so that we have access to our EKS cluster
       
 ```sh
-aws eks update-kubeconfig --name eksworkshop-eksctl --region us-east-1
+aws eks update-kubeconfig --name eksworkshop-eksctl
 ```
 
 Now confirm that you have access to your EKS cluster by running the following command

@@ -20,8 +20,8 @@ When the scan completes, review the list of vulnerabilities. There are quite a f
 ...
 Package manager:   deb
 Target file:       Dockerfile
-Project name:      docker-image|648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer
-Docker image:      648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer:latest
+Project name:      docker-image|648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer
+Docker image:      648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer:latest
 Platform:          linux/amd64
 Base image:        python:3.11.1
 Licenses:          enabled
@@ -74,12 +74,11 @@ FROM python:3.12.01b
 
 Now, rebuild the image:
 ```bash
-cd image-app
 docker build -t $ECR_REPO/thumbnailer .
 ```
  ... and let's re-scan it:
 ```bash
-docker scan $ECR_REPO/thumbnailer --file Dockerfile --exclude-app-vulns
+snyk container test $ECR_REPO/thumbnailer --file=Dockerfile --exclude-app-vulns
 ```
 
 The results now should show the lower vulnerability count.
@@ -87,8 +86,8 @@ The results now should show the lower vulnerability count.
 ...
 Package manager:   deb
 Target file:       Dockerfile
-Project name:      docker-image|648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer
-Docker image:      648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer:latest
+Project name:      docker-image|648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer
+Docker image:      648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer:latest
 Platform:          linux/amd64
 Base image:        python:3.12.0b1
 Licenses:          enabled

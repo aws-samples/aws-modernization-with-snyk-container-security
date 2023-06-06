@@ -10,18 +10,18 @@ Now that you've cloned the repo to your working environment, we'll build a few c
 The following commands will create 3 repositories for the images we will be building:
 
 ```sh
-aws ecr create-repository --repository-name thumbnailer --region us-east-1
-aws ecr create-repository --repository-name todolist --region us-east-1
-aws ecr create-repository --repository-name log4shell-server --region us-east-1
+aws ecr create-repository --repository-name thumbnailer
+aws ecr create-repository --repository-name todolist
+aws ecr create-repository --repository-name log4shell-server
 ```
 After each finishes you should get a JSON reponse similar to the following:
 ```json
 {
     "repository": {
-        "repositoryArn": "arn:aws:ecr:us-east-1:012345678901:repository/thumbnailer",
+        "repositoryArn": "arn:aws:ecr:us-east-2:012345678901:repository/thumbnailer",
         "registryId": "012345678901",
         "repositoryName": "thumbnailer",
-        "repositoryUri": "012345678901.dkr.ecr.us-east-1.amazonaws.com/thumbnailer",
+        "repositoryUri": "012345678901.dkr.ecr.us-east-2.amazonaws.com/thumbnailer",
         "createdAt": "2023-06-05T16:02:53+00:00",
         "imageTagMutability": "MUTABLE",
         "imageScanningConfiguration": {
@@ -37,16 +37,16 @@ After each finishes you should get a JSON reponse similar to the following:
 If you need to re-retrieve your repository info in the future, you can run `aws ecr describe-repositories` to get a list of all of them.
 {{% /notice %}}
 
-In the response copy the value of the `registryId` and replace `[registryId]` in the command below which will store it in an environment variable for future use:
+In the response copy the hostname part of the `repositoryUri` (not including the '/' and anything ater it) and paste it into command below which will store it in an environment variable for future use (replace [REPOURI] with it):
 ```sh
-export ECR_REPO="[registryId].dkr.ecr.us-east-1.amazonaws.com"
+export ECR_REPO=[REPOURI]
 ```
-Note: do not include the image tag in the above variable, just the account and domain.
+
 
 ## Log into your repositories
 Next, we log into our repositories (one command logs you into any of your repositories)
 ```sh
-aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $ECR_REPO
+aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REPO
 ```
 This should return a `Login Succeeded` repsonse.
 
@@ -68,9 +68,9 @@ When all of the build processes are complete, if you run `docker images` you sho
 ```
 $ docker images                                                                                                                                                             
 REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
-012345678901.dkr.ecr.us-east-1.amazonaws.com/log4shell-server   latest    a42b0d443129   10 minutes ago   535MB
-012345678901.dkr.ecr.us-east-1.amazonaws.com/todolist           latest    57ad8c044dbd   15 minutes ago   612MB
-012345678901.dkr.ecr.us-east-1.amazonaws.com/thumbnailer        latest    3406c6d949b4   20 minutes ago   941MB
+012345678901.dkr.ecr.us-east-2.amazonaws.com/log4shell-server   latest    a42b0d443129   10 minutes ago   535MB
+012345678901.dkr.ecr.us-east-2.amazonaws.com/todolist           latest    57ad8c044dbd   15 minutes ago   612MB
+012345678901.dkr.ecr.us-east-2.amazonaws.com/thumbnailer        latest    3406c6d949b4   20 minutes ago   941MB
 ```
 
 ## Push container images to ECR
@@ -83,6 +83,6 @@ docker push $ECR_REPO/log4shell-server:latest
 
 ```
 
-Once the pushes complete, log in to your [ECR repositories](https://us-east-1.console.aws.amazon.com/ecr/repositories?region=us-east-1) to see your new image repositories. 
+Once the pushes complete, log in to your [ECR repositories](https://console.aws.amazon.com/ecr/repositories) to see your new image repositories. 
 
 ![ecr-repos](/images/ecr-repos.png)
