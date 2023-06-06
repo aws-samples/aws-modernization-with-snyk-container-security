@@ -25,9 +25,6 @@ If you are currently logged in to an AWS Account, you can log out using this [li
 
 3. Use a single region for the duration of this workshop. This workshop supports the following regions:
 
-* us-east-1 (US East - Virginia)
-
-**If your region is something set to a region that is not us-east-1, please let the person running the event know**
 
 
 ![Event Engine Region](/images/modernization-workshop-region-check.png)

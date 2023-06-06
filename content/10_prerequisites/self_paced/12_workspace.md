@@ -10,12 +10,6 @@ not the root account user. Please ensure you are logged in as an IAM user, not t
 account user.
 {{% /notice %}}
 
-{{% notice info %}}
-This workshop was designed to run in the **N.Virginia (us-east-1)** region. **Please don't
-run in any other region.** Future versions of this workshop will expand region availability,
-and this message will be removed.
-{{% /notice %}}
-
 {{% notice tip %}}
 Ad blockers, javascript disablers, and tracking blockers should be disabled for
 the cloud9 domain, or connecting to the workspace might be impacted.
@@ -23,7 +17,7 @@ Cloud9 requires third-party-cookies. You can whitelist the [specific domains]( h
 {{% /notice %}}
 
 ### Launch Cloud9:
-Create a Cloud9 Environment: [https://us-east-1.console.aws.amazon.com/cloud9/home?region=us-east-1](https://us-east-1.console.aws.amazon.com/cloud9/home?region=us-east-1)
+Create a Cloud9 Environment: [https://console.aws.amazon.com/cloud9/home](https://console.aws.amazon.com/cloud9/home)
 
 1. Select **Create environment**
 2. Name it **Snyk-Workshop** and click **Next Step**

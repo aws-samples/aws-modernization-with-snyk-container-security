@@ -9,7 +9,7 @@ weight: 13
 You will need to assign an IAM Role to your Cloud9 instance for Administrative operations.  This section walks you through those steps.
 
 ## Select the service
-Follow [this link](https://us-east-1.console.aws.amazon.com/iamv2/home?region=us-east-1#/roles/create) to create an IAM role with administrator access.
+Follow [this link](https://console.aws.amazon.com/iamv2/home#/roles/create) to create an IAM role with administrator access.
 
 1. Click on AWS Service
 1. Select the EC2 use case

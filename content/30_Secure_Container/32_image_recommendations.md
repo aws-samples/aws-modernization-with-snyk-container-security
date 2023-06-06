@@ -20,8 +20,8 @@ When the scan completes, review the list of vulnerabilities. There are quite a f
 ...
 Package manager:   deb
 Target file:       Dockerfile
-Project name:      docker-image|648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer
-Docker image:      648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer:latest
+Project name:      docker-image|648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer
+Docker image:      648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer:latest
 Platform:          linux/amd64
 Base image:        python:3.11.1
 Licenses:          enabled
@@ -87,8 +87,8 @@ The results now should show the lower vulnerability count.
 ...
 Package manager:   deb
 Target file:       Dockerfile
-Project name:      docker-image|648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer
-Docker image:      648839523175.dkr.ecr.us-east-1.amazonaws.com/thumbnailer:latest
+Project name:      docker-image|648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer
+Docker image:      648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer:latest
 Platform:          linux/amd64
 Base image:        python:3.12.0b1
 Licenses:          enabled

@@ -40,8 +40,8 @@ pod/goof-7bd8895c4d-zl8ln          1/1     Running   0          19s
 pod/thumbnailer-6cc495969b-j6tkb   1/1     Running   0          19s
 
 NAME                  TYPE           CLUSTER-IP      EXTERNAL-IP                                                               PORT(S)        AGE
-service/goof          LoadBalancer   10.100.48.151   SOME_LONG_STRING.us-east-1.elb.amazonaws.com    80:30835/TCP   19s
-service/thumbnailer   LoadBalancer   10.100.42.253   ANOTHER_LONG_STRING.us-east-1.elb.amazonaws.com   80:30594/TCP   19s
+service/goof          LoadBalancer   10.100.48.151   SOME_LONG_STRING.us-east-2.elb.amazonaws.com    80:30835/TCP   19s
+service/thumbnailer   LoadBalancer   10.100.42.253   ANOTHER_LONG_STRING.us-east-2.elb.amazonaws.com   80:30594/TCP   19s
 
 NAME                          READY   UP-TO-DATE   AVAILABLE   AGE
 deployment.apps/goof          1/1     1            1           19s

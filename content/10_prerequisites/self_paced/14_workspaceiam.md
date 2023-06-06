@@ -11,8 +11,8 @@ In this section we attach the IAM role to grant your EC2 instance permission to 
 ## Find the Cloud9 EC2 instance
 Access the EC2 instance running your Cloud9 environment by either of the following means:
 
-* Follow [this link](https://us-east-1.console.aws.amazon.com/ec2/v2/home?region=us-east-1#Instances:search=cloud9-Snyk-Workshop;sort=desc:launchTime) to find your Cloud9 EC2 instance, or... 
-* In the [Cloud9 dashboard](https://us-east-1.console.aws.amazon.com/cloud9control/home?region=us-east-1#/) open your environment and click on the "Manage EC2 Instance" button on the right side of the page.
+* Follow [this link](https://console.aws.amazon.com/ec2/v2/home#Instances:search=cloud9-Snyk-Workshop;sort=desc:launchTime) to find your Cloud9 EC2 instance, or... 
+* In the [Cloud9 dashboard](https://console.aws.amazon.com/cloud9control/home/) open your environment and click on the "Manage EC2 Instance" button on the right side of the page.
 
 ![](/images/c9-manage-ec2-inst.png)
 
