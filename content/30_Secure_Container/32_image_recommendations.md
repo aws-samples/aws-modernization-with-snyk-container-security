@@ -69,7 +69,7 @@ FROM python:3.11.1
 ```
 To:
 ```docker
-FROM python:3.12.01b
+FROM python:3.12.0b1
 ```
 
 Now, rebuild the image:
