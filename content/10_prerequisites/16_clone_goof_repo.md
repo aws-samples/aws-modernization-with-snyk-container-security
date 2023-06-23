@@ -37,7 +37,7 @@ git clone https://github.com/$GithubId/goof && cd goof
 This copies the Repo files to your Cloud9 environment. 
 
 ## Run setup scripts
-In order to install all of the needed tools, there are acouple of setup scripts in the `cloud9-setup` dicrectory you should run:
+In order to install all of the needed tools, there are a couple of setup scripts in the `cloud9-setup` directory you should run:
 
 ### Tool setup
 The `setup.sh` script installs and/or updates the following tools:
