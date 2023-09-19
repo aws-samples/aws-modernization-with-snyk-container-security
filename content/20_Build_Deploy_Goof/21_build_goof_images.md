@@ -39,14 +39,14 @@ If you need to re-retrieve your repository info in the future, you can run `aws 
 
 In the response copy the hostname part of the `repositoryUri` (not including the '/' and anything ater it) and paste it into command below which will store it in an environment variable for future use (replace [REPOURI] with it):
 ```sh
-export ECR_REPO=[REPOURI]
+export REPO=[REPOURI]
 ```
 
 
 ## Log into your repositories
 Next, we log into our repositories (one command logs you into any of your repositories)
 ```sh
-aws ecr get-login-password | docker login --username AWS --password-stdin $ECR_REPO
+aws ecr get-login-password | docker login --username AWS --password-stdin $REPO
 ```
 This should return a `Login Succeeded` repsonse.
 
@@ -56,11 +56,11 @@ Now we will build the images. Be sure you are cd'ed into the cloned goof repo di
 
 Once you are in the right directory, run the following commands to build the container images.
 ```sh
-docker build -t $ECR_REPO/thumbnailer:latest thumbnailer
+docker build -t $REPO/thumbnailer:latest thumbnailer
 
-docker build -t $ECR_REPO/todolist:latest todolist
+docker build -t $REPO/todolist:latest todolist
 
-docker build -t $ECR_REPO/log4shell-server:latest todolist/exploits/log4shell-server
+docker build -t $REPO/log4shell-server:latest todolist/exploits/log4shell-server
 
 ```
 
@@ -77,9 +77,9 @@ REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
 Next, we want to push the images to ECR but before we can push them we need to create their respective repositories.
 
 ```sh
-docker push $ECR_REPO/thumbnailer:latest
-docker push $ECR_REPO/todolist:latest
-docker push $ECR_REPO/log4shell-server:latest
+docker push $REPO/thumbnailer:latest
+docker push $REPO/todolist:latest
+docker push $REPO/log4shell-server:latest
 
 ```
 

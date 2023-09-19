@@ -11,7 +11,7 @@ Vulnerable components like the version of ImageMagick present in our container i
 Scan the image by running the following command (assuming you are cd'ed to the thumbnailer directory of your goof repo). 
 
 ```sh
-snyk container test $ECR_REPO/thumbnailer:latest --file=Dockerfile --exclude-app-vulns
+snyk container test $REPO/thumbnailer:latest --file=Dockerfile --exclude-app-vulns
 ```
 
 When the scan completes, review the list of vulnerabilities. There are quite a few!
@@ -74,11 +74,11 @@ FROM python:3.12.0b1
 
 Now, rebuild the image:
 ```bash
-docker build -t $ECR_REPO/thumbnailer .
+docker build -t $REPO/thumbnailer .
 ```
  ... and let's re-scan it:
 ```bash
-snyk container test $ECR_REPO/thumbnailer --file=Dockerfile --exclude-app-vulns
+snyk container test $REPO/thumbnailer --file=Dockerfile --exclude-app-vulns
 ```
 
 The results now should show the lower vulnerability count.
