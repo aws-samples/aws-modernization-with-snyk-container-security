@@ -8,7 +8,7 @@ With our image rebuilt, let's push it up to ECR and redeploy the more secure bui
 
 ## Push to ECR
 ```sh
-docker push $ECR_REPO/thumbnailer:latest
+docker push $REPO/thumbnailer:latest
 ```
 
 ## Re-deploy the Application to EKS

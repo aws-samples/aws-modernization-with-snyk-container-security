@@ -21,7 +21,7 @@ kubectl config set-context --current --namespace snyk-aws
 
 ## Deploy the applications
 
-Ensure the `ECR_REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
+Ensure the `REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
 ```
 cat manifests/*.yaml | envsubst | kubectl apply -f -
 ```
