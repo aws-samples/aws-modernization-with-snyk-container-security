@@ -77,6 +77,6 @@ url = "https://www.appmeshworkshop.com/"
 weight = 23
 
 [markup]
-  defaultMarkdownHandler = "blackfriday"
+  defaultMarkdownHandler = "goldmark"
   [markup.blackFriday]
     hrefTargetBlank = true
