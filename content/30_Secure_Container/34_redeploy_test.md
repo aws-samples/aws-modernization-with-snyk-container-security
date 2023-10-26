@@ -50,18 +50,12 @@ And then try to decode the result:
 ./exploit.py decode result.png                                                                                                                                             
 ```
 ```sh
-Decoding content from /home/ec2-user/environment/goof/thumbnailer/result.png...
+Decoding content from /home/ubuntu/environment/goof/thumbnailer/result.png...
 
-Executing: identify -verbose /home/ec2-user/environment/goof/thumbnailer/result.png
-Traceback (most recent call last):
-  File "./exploit.py", line 51, in <module>
-    print(decode_png(png_file=sys.argv[2]))
-  File "./exploit.py", line 31, in decode_png
-    start_raw_data = ["Raw profile type:" in line for line in lines].index(True) + 3
-ValueError: True is not in list
+Unable to find hacker metadata in the image. Nothing to see here!
 ```
 
-The error is because the block in the png metadata that container the payload no longer exists so we can see that the imagemagick exploit no longer works, and our container image is more secure than it was when we started. 
+We get a different result because the block in the png metadata that contains the payload no longer exists. We can see that the imagemagick exploit no longer works, and our container image is more secure than it was when we started. 
 
 This is one example of how a vulnerable component introduced by the container base image can have serious security implications. Without scanning it for vulnerabilities, the app works and looks harmless, but can leave a security hole in your infrastructure. Well done! 
 
