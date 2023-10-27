@@ -31,7 +31,7 @@ sudo mv /tmp/eksctl /usr/local/bin
 This should get you the binary where the following command should show how many EKS clusters you have in your environment.  At the start of the workshop, you will have no clusters.
 
 ```
-eksctl get cluster
+eksctl get cluster --region us-east-1
 ```
 
 ## Install kubectl
