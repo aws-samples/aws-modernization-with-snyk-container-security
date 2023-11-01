@@ -58,7 +58,7 @@ cd cloud9-setup
 The `aws` CLI tool can update our kubeconfig file so that we have access to our EKS cluster
       
 ```sh
-aws eks update-kubeconfig --name eksworkshop-eksctl
+aws eks update-kubeconfig --name eks-workshop
 ```
 
 Now confirm that you have access to your EKS cluster by running the following command
