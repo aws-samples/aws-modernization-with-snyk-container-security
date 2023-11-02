@@ -20,29 +20,29 @@ When the scan completes, review the list of vulnerabilities. There are quite a f
 ...
 Package manager:   deb
 Target file:       Dockerfile
-Project name:      docker-image|648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer
-Docker image:      648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer:latest
+Project name:      docker-image|012345678901.dkr.ecr.us-west-2.amazonaws.com/thumbnailer
+Docker image:      012345678901.dkr.ecr.us-west-2.amazonaws.com/thumbnailer:latest
 Platform:          linux/amd64
 Base image:        python:3.11.1
 Licenses:          enabled
 
-Tested 427 dependencies for known issues, found 333 issues.
+Tested 426 dependencies for known issues, found 393 issues.
 
 Base Image     Vulnerabilities  Severity
-python:3.11.1  333              6 critical, 16 high, 65 medium, 246 low
+python:3.11.1  405              9 critical, 29 high, 85 medium, 282 low
 
 Recommendations for base image upgrade:
 
 Minor upgrades
-Base Image       Vulnerabilities  Severity
-python:3.12.0b1  256              4 critical, 4 high, 5 medium, 243 low
+Base Image     Vulnerabilities  Severity
+python:3.11.5  179              3 critical, 4 high, 13 medium, 159 low
 
 Alternative image types
-Base Image                   Vulnerabilities  Severity
-python:3.12.0b1-slim         54               0 critical, 1 high, 2 medium, 51 low
-python:3-slim-bullseye       54               0 critical, 1 high, 2 medium, 51 low
-python:3.12.0b1-slim-buster  79               1 critical, 2 high, 1 medium, 75 low
-python:3.12-rc-buster        367              2 critical, 9 high, 9 medium, 347 low
+Base Image                    Vulnerabilities  Severity
+python:3.13-rc-slim           33               1 critical, 0 high, 0 medium, 32 low
+python:3.11.6-slim            34               1 critical, 0 high, 0 medium, 33 low
+python:3.12.0-slim-bookworm   35               1 critical, 0 high, 0 medium, 34 low
+python:3.13-rc-slim-bullseye  60               1 critical, 0 high, 0 medium, 59 low
 ...
 ```
 As you can see, the Snyk engine is recommending we consider upgrading to newer base images that have fixes for many of the issues found in ours.  If you search the output of the scan, you also can see that our CVE is, indeed in this base image.
@@ -69,7 +69,7 @@ FROM python:3.11.1
 ```
 To:
 ```docker
-FROM python:3.12.0b1
+FROM python:3.12.5
 ```
 
 Now, rebuild the image:
@@ -86,25 +86,25 @@ The results now should show the lower vulnerability count.
 ...
 Package manager:   deb
 Target file:       Dockerfile
-Project name:      docker-image|648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer
-Docker image:      648839523175.dkr.ecr.us-east-2.amazonaws.com/thumbnailer:latest
+Project name:      docker-image|012345678901.dkr.ecr.us-west-2.amazonaws.com/thumbnailer
+Docker image:      012345678901.dkr.ecr.us-west-2.amazonaws.com/thumbnailer
 Platform:          linux/amd64
-Base image:        python:3.12.0b1
+Base image:        python:3.11.5
 Licenses:          enabled
 
-Tested 427 dependencies for known issues, found 256 issues.
+Tested 429 dependencies for known issues, found 179 issues.
 
-Base Image       Vulnerabilities  Severity
-python:3.12.0b1  256              4 critical, 4 high, 5 medium, 243 low
+Base Image     Vulnerabilities  Severity
+python:3.11.5  179              3 critical, 4 high, 13 medium, 159 low
 
 Recommendations for base image upgrade:
 
 Alternative image types
-Base Image                     Vulnerabilities  Severity
-python:3.12.0b1-slim           54               0 critical, 1 high, 2 medium, 51 low
-python:3.12.0a4-slim-bullseye  63               0 critical, 6 high, 6 medium, 51 low
-python:3.12.0b1-slim-buster    79               1 critical, 2 high, 1 medium, 75 low
-python:3.12-rc-buster          367              2 critical, 9 high, 9 medium, 347 low
+Base Image                    Vulnerabilities  Severity
+python:3.13-rc-slim           33               1 critical, 0 high, 0 medium, 32 low
+python:3.11.6-slim            34               1 critical, 0 high, 0 medium, 33 low
+python:3.12.0-slim-bookworm   35               1 critical, 0 high, 0 medium, 34 low
+python:3.13-rc-slim-bullseye  60               1 critical, 0 high, 0 medium, 59 low
 ```
 If you search through the output, you should find our ImageMagick CVE is gone.
 

@@ -37,9 +37,15 @@ After each finishes you should get a JSON reponse similar to the following:
 If you need to re-retrieve your repository info in the future, you can run `aws ecr describe-repositories` to get a list of all of them.
 {{% /notice %}}
 
-In the response copy the hostname part of the `repositoryUri` (not including the '/' and anything ater it) and paste it into command below which will store it in an environment variable for future use (replace [REPOURI] with it):
+In the response we want to copy the hostname part of the `repositoryUri` (not including the '/' and anything ater it) and paste it into command below which will store it in an environment variable for future use. Fortunately, those values are available in environement variables so this command collect them and store them in a `REPO`` variable for our use in later steps:
 ```sh
-export REPO=[REPOURI]
+export REPO=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+echo $REPO
+```
+
+The output should look something like the following:
+```
+012345678901.dkr.ecr.us-east-2.amazonaws.com
 ```
 
 
@@ -86,3 +92,8 @@ docker push $REPO/log4shell-server:latest
 Once the pushes complete, log in to your [ECR repositories](https://console.aws.amazon.com/ecr/repositories) to see your new image repositories. 
 
 ![ecr-repos](/images/ecr-repos.png)
+
+{{% notice tip %}}
+If your ECR Repositories list is empty, ensure you are looking at the correct region. This workshop defaults to `us-west-2` (Oregon).
+{{% /notice %}}
+
