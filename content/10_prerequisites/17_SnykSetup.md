@@ -13,8 +13,8 @@ You will need a Snyk account to run scans.  Snyk is available for free and all y
 [Login or Create a free account here.](https://snyk.co/ImmersionDay-Containers-Jun23)
 
 ### Create Snyk Access Token
-- Visit your Snyk account (Account Settings > API Token section) (https://app.snyk.io/account)
-- In the KEY field, select click to show, then select and copy your API token from the field
+- Visit your Snyk account (Account Settings > Auth Token section) (https://app.snyk.io/account)
+- In the KEY field, select click to show, then select and copy your Auth token from the field
 - Paste the token that appears on the screen in a safe location for use in future modules
 
 {{% notice warning %}}
@@ -40,14 +40,14 @@ chmod +x ./snyk && \
 sudo mv ./snyk /usr/local/bin/
 ```
 
-In Cloud9 environments, you will need to authenticate on the CLI with your API token.  Previously, you should have created an API token.  If not, navigate to your Snyk Account (https://app.snyk.io/account), and get your API_TOKEN by clicking into your Account Settings -> API Token section.
+In Cloud9 environments, you will need to authenticate on the CLI with your Auth token.  Previously, you should have created an Auth token.  If not, navigate to your Snyk Account (https://app.snyk.io/account), and get your AUTH_TOKEN by clicking into your Account Settings -> Auth Token section.
 
-In the KEY field, click your “click to show” box to copy your API token.
+In the KEY field, click your “click to show” box to copy your Auth token.
 
-You can then run this command where API_TOKEN is the value you copied.
+You can then run this command where AUTH_TOKEN is the value you copied.
 
 ```
-snyk auth API_TOKEN.
+snyk auth AUTH_TOKEN.
 ```
 
 That should be it!  Your response should look like the following:
