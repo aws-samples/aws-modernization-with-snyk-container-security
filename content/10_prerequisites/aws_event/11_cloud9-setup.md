@@ -10,7 +10,7 @@ weight: 11
 
 ## Access Cloud9 in AWS Management Console 
 
-Once you have logged into the AWS Management Console from your EventEngine team landing page, you will already have an EKS cluster and Cloud9 environment. A few additional steps are required to configure Cloud9 and install the tools as follows.
+Once you have logged into the AWS Management Console from your Workshop Studio event dashboard page, you will already have an EKS cluster and Cloud9 environment. A few additional steps are required to configure Cloud9 and install the tools as follows.
 
 
 ![cloudd9](/images/workshop-studio-cloud9-dashboard.png)
