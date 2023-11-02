@@ -12,3 +12,4 @@ weight = 40
 
 We can still go further with hardening our application. We will see how Chainguard Images can be
 used to minimise the attack surface of our images and drastically reduce the vulnerability count.
+We'll also see a couple of common techniques for hardening containers in production.

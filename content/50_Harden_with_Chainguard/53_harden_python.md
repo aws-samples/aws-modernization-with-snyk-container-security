@@ -4,9 +4,29 @@ chapter = false
 weight = 41
 +++
 
-## 
+## Investigating our Container 
 
-Take a look at the logs from the thumbnailer:
+Let's investigate our thumbnailer container a bit more.
+
+We'll start by taking a look at the logs from the thumbnailer. First we'll need to find the full name of the
+pod:
+
+```bash
+kubectl get pods
+```
+
+```
+NAME                           READY   STATUS    RESTARTS   AGE
+thumbnailer-6cc796bd56-lkm2x   1/1     Running   0          131m
+todolist-778ddc9684-kfjgm      1/1     Running   0          59m
+```
+
+Take the full name of the thumbnailer pod (yours will different) and put it into the `logs` command:
+
+```
+kubectl logs thumbnailer-<id>
+```
+
 
 ```
  * Serving Flask app 'webapp'
@@ -21,12 +41,13 @@ Press CTRL+C to quit
  * Debugger PIN: 673-830-468
 ```
 
-The image we are using currently is great for development, as it includes various debugging
-features, but in production we should use something more hardened.
+So our image is using a development server with debugging support. This is great for developers
+working on an application, but not so great for production when we want to lock things down. Let's
+follow the advice in the logs to use a production WSGI server.
 
 ## Using a Production Server
 
-To do this, the simplest option is to replace the Flask development server with [gunicorn](https://gunicorn.org/). 
+The simplest option is to replace the Flask development server with [gunicorn](https://gunicorn.org/). 
 
 
 Double click on the `Dockerfile` under the `thumbnailer` directory in your Cloud9 IDE sidebar and change the line where we install packages from:
@@ -42,8 +63,7 @@ RUN apk add imagemagick py3-gunicorn
 We also need to change the entrypoint commands to start gunicorn. Change the command from:
 
 ```docker
-ENTRYPOINT ["python3"]
-CMD ["/app/webapp.py"]
+CMD ["webapp.py"]
 ```
 To:
 ```docker
@@ -51,68 +71,77 @@ ENTRYPOINT ["gunicorn"]
 CMD ["--bind", "0.0.0.0:5000", "webapp:app"]
 ```
 
-You can rebuild and redeploy the image at this stage, but there's another simple improvement we can
+## Don't Run as Root
+
+Before we rebuild and redeploy the image, there's another simple improvement we can
 make. At the moment, the main process in the container is running as the root user. We can see this by
-running `ps` in the container. First find the full name of the thumbnailer pod:
-
-
-```bash
-kubectl get pods 
-```
-
-Which will give you something like:
+running `ps` in the container, using the same pod name as before:
 
 ```
-NAME                           READY   STATUS    RESTARTS   AGE
-thumbnailer-84fbb67f8b-gbsk9   1/1     Running   0          48m
-todolist-56cf84f9bb-qvl8c      1/1     Running   0          2d4h
-```
-
-Using the name of the pod as an argument, run the following:
-
-```
-kubectl exec thumbnailer-84fbb67f8b-gbsk9 -- ps -ux
+kubectl exec thumbnailer-<id> -- ps -ux
 ```
 
 And you should get something similar to:
 
 ```
-USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
-root           1  0.0  0.2  39300 30816 ?        Ss   17:15   0:00 python3 /app/webapp.py
-root          10  0.5  0.1 112708 30284 ?        Sl   17:15   0:06 /usr/local/bin/python3 /app/webapp.py
-root          42  0.0  0.0   8332  2816 ?        Rs   17:38   0:00 ps -ux
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.4  38224 32100 ?        Ss   12:19   0:00 python3 webapp.py
+root         7  0.5  0.4 265320 32364 ?        Sl   12:19   1:01 /usr/local/bin/python3 webapp.py
+root      3162  0.0  0.0   8536  4272 ?        Rs   15:12   0:00 ps -ux
 ```
 
 Note the user on the left is "root". If an attacker was able to compromise one of the processes,
-they would have full privileges in the container, including the ability to read and write to any file. In addition, if they were able to escape the container, they could potentially have elevated privleges on the host.
+they would have full privileges in the container, including the ability to read and write to any
+file. In addition, if they were able to escape the container, they could potentially have elevated
+privleges on the host.
 
-Thankfully, fixing this is relatively straightforward. In the Dockerfile, add the line 
+Thankfully, fixing this is relatively straightforward. In the Dockerfile, after the line:
 
 
 ```docker
-USER nonroot
+RUN apk add imagemagick py3-gunicorn 
 ```
 
-After the installing packages step. Chainguard images come with the nonroot user predefined, so we
-don't have to create a new user. The USER instruction will take effect for subsequent lines in the
-Dockerfile and when the container is started. 
+Add the lines:
 
-The complete Dockerfile should now look like this:
+```docker
+USER nonroot
+WORKDIR /app
+```
+
+We also need to tweak the line that creates the upload directory, so that it uses a local directory
+that the new user can write to. Change the line:
+
+```docker
+RUN mkdir /uploads
+```
+
+Remove the `/` so that it becomes:
+
+```docker
+RUN mkdir uploads
+```
+
+Chainguard images come with the nonroot user predefined, so we don't have to create a new user. The
+`USER` instruction will take effect for subsequent lines in the Dockerfile and when the container is
+started. 
+
+The complete Dockerfile should now look like this (with comments removed):
 
 ```
 FROM cgr.dev/chainguard/python:latest-dev
-
 USER root
-RUN apk add py3-gunicorn imagemagick
+RUN apk add imagemagick py3-gunicorn
 USER nonroot
 WORKDIR /app
 
 RUN pip install flask
+
 COPY webapp.py webapp.py
 COPY templates templates
-RUN mkdir uploads
 
 EXPOSE 5000
+RUN mkdir uploads
 
 ENTRYPOINT ["gunicorn"]
 CMD ["--bind", "0.0.0.0:5000", "webapp:app"]
@@ -129,16 +158,11 @@ And as before, push the image and deploy the application:
 
 ```sh
 docker push $REPO/thumbnailer:latest
-```
-
-Followed by:
-
-```sh
 kubectl scale deployment thumbnailer --replicas=0
 kubectl scale deployment thumbnailer --replicas=1
 ```
 
-Let's try checking the user again. First get pod name again, as it will have changed in the restart:
+Let's try checking the user again. First get the pod name again, as it will have changed in the restart:
 
 ```
 kubectl get pods
@@ -148,26 +172,27 @@ Which gave me:
 
 ```
 NAME                           READY   STATUS    RESTARTS   AGE
-thumbnailer-84fbb67f8b-577n5   1/1     Running   0          26s
-todolist-56cf84f9bb-qvl8c      1/1     Running   0          2d6hk
+thumbnailer-6cc796bd56-sfpfd   1/1     Running   0          32s
+todolist-778ddc9684-kfjgm      1/1     Running   0          141m
 ```
 
 The `ps` implementation in the Chainguard image is a little different, so we don't need the
 arguments:
 
 ```
-kubectl exec thumbnailer-84fbb67f8b-577n5 -- ps
+kubectl exec thumbnailer-<id> -- ps
 ```
 
 Which will output something similar to:
 
 ```
+PID   USER     TIME  COMMAND
     1 nonroot   0:00 {gunicorn} /usr/bin/python /usr/bin/gunicorn --bind 0.0.0.0:5000 webapp:app
-   10 nonroot   0:00 {gunicorn} /usr/bin/python /usr/bin/gunicorn --bind 0.0.0.0:5000 webapp:app
-   23 nonroot   0:00 ps
+    7 nonroot   0:00 {gunicorn} /usr/bin/python /usr/bin/gunicorn --bind 0.0.0.0:5000 webapp:app
+    8 nonroot   0:00 ps
 ```
 
-Mission accomplished! We now have all processes running as "nonroot", which is a significant boost
-to security.
+Mission accomplished! 
 
-In this section TK...
+We are now using a production webserver and have all processes running as "nonroot", which is a significant boost
+to security.
