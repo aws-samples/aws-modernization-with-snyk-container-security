@@ -69,7 +69,7 @@ FROM python:3.11.1
 ```
 To:
 ```docker
-FROM python:3.12.5
+FROM python:3.11.5
 ```
 
 Now, rebuild the image:
@@ -108,7 +108,7 @@ python:3.13-rc-slim-bullseye  60               1 critical, 0 high, 0 medium, 59 
 ```
 If you search through the output, you should find our ImageMagick CVE is gone.
 
-## About the recomendations
+## About the recommendations
 Snyk recommends less vulnerable base images grouped by how likely they are to be compatible:
 
 - Minor upgrades are the most likely to be compatible with little work,
