@@ -10,7 +10,7 @@ You will need a Snyk account to run scans.  Snyk is available for free and all y
 ## Setting up your Snyk Account
 
 ### Create or Login to Snyk account
-[Login or Create a free account here.](https://snyk.co/ImmersionDay-Containers-Jun23)
+[Login or Create a free account here.](https://snyk.co/KubeConUS-2023)
 
 ### Create Snyk Access Token
 - Visit your Snyk account (Account Settings > Auth Token section) (https://app.snyk.io/account)

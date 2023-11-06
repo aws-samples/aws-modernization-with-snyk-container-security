@@ -10,7 +10,7 @@ To check for issues in the application's Open Source dependencies, in this examp
 
 ### Set up GitHub integration
 
-1. Log in to [Snyk.io](https://snyk.co/ImmersionDay-Containers-Jun23). Sign up if you haven't already.
+1. Log in to [Snyk.io](https://snyk.co/KubeConUS-2023). Sign up if you haven't already.
 If this is the first time you've used your Snyk account on the website, you may see a screen like this. If so, go ahead and click the "Skip for now" link at the top-right corner of the page.
 ![snyk-new-user](/images/snyk-gh-new.png)
 2. Navigate to Integrations -> Source Control -> GitHub
