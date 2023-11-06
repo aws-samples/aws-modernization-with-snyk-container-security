@@ -6,7 +6,7 @@ weight: 1
 
 # Application Modernization with AWS, Snyk
 
-![Snyk] (/images/snyk-card.png)
+![Snyk](/images/snyk-card.png)
 
 ### Welcome!
 
