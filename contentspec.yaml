@@ -20,7 +20,7 @@ additionalLinks:
 # START Infrastructure
 infrastructure:
   cloudformationTemplates:
-    - templateLocation: static/cfn.yaml
+    - templateLocation: static/lab-setup.yaml
       label: EKS Workshop Environment
 
       parameters:
