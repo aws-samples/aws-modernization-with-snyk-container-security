@@ -1,0 +1,69 @@
+version: 2.0
+
+# BEGIN Locale
+defaultLocaleCode: en-US
+localeCodes:
+  - en-US
+# END Locale
+
+# A dictionary of arbitrary parameters that can be referenced in the workshop guide
+# using the params directive.
+params:
+  author: Patrick Vassell, Shashiraj (Raj) Jeripotula & Snyk
+  description: Snyk and AWS - DevSecOps Workshop
+
+# List of links to display in the workshop guide. Will be rendered on the left hand side navigation menu.
+additionalLinks:
+  - title: Snyk and AWS - DevSecOps Workshop
+    link: https://github.com/aws-samples/aws-modernization-with-snyk-container-security
+
+# START Infrastructure
+infrastructure:
+  cloudformationTemplates:
+    - templateLocation: static/cfn.yaml
+      label: EKS Workshop Environment
+
+      parameters:
+
+          # The parameter name present in the corresponding CloudFormation template
+        - templateParameter: WorkshopStudioRun
+          defaultValue: "true"
+        - templateParameter: C9InstanceVolumeSize
+          defaultValue: 50
+
+# END Infrastructure
+
+# START Accounts
+awsAccountConfig:
+  accountSources:
+    - workshop_studio
+  serviceLinkedRoles:
+    - appsync.amazonaws.com
+  participantRole:
+    iamPolicies: 
+      - static/iam_policy.json
+    managedPolicies:
+      - "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/AdministratorAccess"
+    trustedPrincipals:
+      service:
+        - ec2.amazonaws.com
+        - codebuild.amazonaws.com
+        - lambda.amazonaws.com
+  regionConfiguration:
+    minAccessibleRegions: 1
+    maxAccessibleRegions: 3
+    accessibleRegions:
+      recommended:
+        - us-west-2
+        - us-east-1
+        - us-east-2
+    deployableRegions:
+      recommended:
+        - us-west-2
+        - us-east-1
+        - us-east-2
+
+        
+      
+# END Accounts
