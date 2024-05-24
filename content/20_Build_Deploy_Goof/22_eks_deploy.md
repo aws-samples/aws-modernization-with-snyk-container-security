@@ -7,6 +7,13 @@ weight = 22
 
 For this workshop we created an Amazon EKS cluster where we run the Goof apps and you are now going to deploy the applications we build into it.
 
+## Update the Kubeconfig file
+
+```sh
+# update kubeconfig file
+aws eks update-kubeconfig --name $(aws eks list-clusters --query 'clusters[0]' --output text)
+```
+
 ## Create and set context to a namespace
 
 We will be running these applications in a specific namespace.
