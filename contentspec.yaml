@@ -1,4 +1,4 @@
-version: 2.0
+nversion: 2.0
 
 # BEGIN Locale
 defaultLocaleCode: en-US
@@ -20,7 +20,7 @@ additionalLinks:
 # START Infrastructure
 infrastructure:
   cloudformationTemplates:
-    - templateLocation: static/lab-setup.yaml
+    - templateLocation: static/Infrastructure/lab-setup.yaml
       label: EKS Workshop Environment
 
       parameters:
