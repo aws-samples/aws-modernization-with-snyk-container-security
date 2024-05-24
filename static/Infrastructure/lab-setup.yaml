@@ -1,0 +1,739 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Cloudformation template for Cloud9 for Snyk and AWS DevSecOps Workshop
+Parameters:
+  C9InstanceVolumeSize: 
+    Type: Number
+    Description: The Size in GB of the Cloud9 Instance Volume. 
+    Default: 60
+
+  KubernetesVersion:
+    Description: Kubernetes version
+    Type: String
+    Default: "1.29"
+
+  EKSClusterName:
+    Description: Name of EKS Cluster
+    Type: String
+    Default: snyk-eks
+
+  WorkerNodeInstanceType:
+    Description: Worker Node cluster instances
+    Type: String
+    Default: t2.medium
+
+  C9InstanceType:
+    Description: Cloud9 instance type
+    Type: String
+    Default: m5.large
+    AllowedValues:
+      - t3.micro
+      - t3.small
+      - t3.medium
+      - m5.large
+    ConstraintDescription: Must be a valid Cloud9 instance type
+
+  C9Name:
+    Type: String
+    Description: Name of the C9 Environment.
+    Default: "snyk-and-aws-workshop"
+  StopTimeMinutes:
+    Type: Number
+    Description: The number of minutes the C9 instance waits to shut down after inactivity (in minutes)
+    Default: 2880
+  # CdkVersion:
+  #   Type: String
+  #   Description: CDK Version for the environment
+  #   Default: "2.93.0"
+  WorkshopStudioRun: 
+    Type: String
+    Description: Flag to determine if the workshop is run in Workshop Studio or not.
+    Default: "false"
+    AllowedValues: 
+      - "true"
+      - "false"
+
+Conditions: 
+  RunonWorkshopStudio: !Equals [ !Ref WorkshopStudioRun, "true" ]
+
+Resources:
+################## PERMISSIONS AND ROLES #################
+  C9Role:
+    Type: AWS::IAM::Role
+    Properties:
+      Tags:
+        - Key: Environment
+          Value: snyk-and-aws-workshop
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - ec2.amazonaws.com
+            - ssm.amazonaws.com
+            - codebuild.amazonaws.com
+            AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AdministratorAccess
+      - arn:aws:iam::aws:policy/AmazonEKSClusterPolicy
+      - arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore
+      Path: "/"
+      RoleName: "snyk-and-aws-workshop-admin"
+
+  C9LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: "/"
+      Policies:
+      - PolicyName:
+          Fn::Join:
+          - ''
+          - - C9LambdaPolicy-
+            - Ref: AWS::Region
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+            Resource: arn:aws:logs:*:*:*
+          - Effect: Allow
+            Action:
+            - cloudformation:DescribeStacks
+            - cloudformation:DescribeStackEvents
+            - cloudformation:DescribeStackResource
+            - cloudformation:DescribeStackResources
+            - ec2:DescribeInstances
+            - ec2:AssociateIamInstanceProfile
+            - ec2:ModifyInstanceAttribute
+            - ec2:ReplaceIamInstanceProfileAssociation
+            - ec2:DescribeIamInstanceProfileAssociations
+            - ec2:DescribeVolumes
+            - ec2:ModifyVolume
+            - ec2:DescribeVolumesModifications
+            - ec2:RebootInstances
+            - iam:ListInstanceProfiles
+            - iam:PassRole
+            - ssm:DescribeInstanceInformation
+            - ssm:SendCommand
+            - ssm:GetCommandInvocation
+            - ssm:ListCommandInvocations
+            Resource: "*"
+
+  KMSSecretsKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: "key for EKS secrets encryption"
+      Enabled: true
+      KeyPolicy:
+        Version: '2012-10-17'
+        Id: key-default-1
+        Statement:
+        - Sid: Enable IAM User Permissions
+          Effect: Allow
+          Principal:
+            AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+          Action: kms:*
+          Resource: '*'
+
+################## LAMBDA BOOTSTRAP FUNCTION ################
+
+  C9BootstrapInstanceLambda:
+    Type: Custom::C9BootstrapInstanceLambda
+    Description: Bootstrap Cloud9 instance
+    DependsOn: C9LambdaExecutionRole
+    Properties:
+      Description: Bootstrap Cloud9 instance
+      Tags:
+        - Key: Environment
+          Value: snyk-and-aws-workshop
+      ServiceToken:
+        Fn::GetAtt:
+        - C9BootstrapInstanceLambdaFunction
+        - Arn
+      REGION:
+        Ref: AWS::Region
+      Cloud9Name: 
+        Fn::GetAtt:
+        - C9Instance
+        - Name
+      EnvironmentId:
+        Ref: C9Instance
+      LabIdeInstanceProfileName:
+        Ref: C9InstanceProfile
+      LabIdeInstanceProfileArn:
+        Fn::GetAtt:
+        - C9InstanceProfile
+        - Arn
+      SsmDocument: !Ref C9SSMDocument
+      SSMDocumentName: !Ref C9SSMDocument
+
+  C9BootstrapInstanceLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      Tags:
+        - Key: Environment
+          Value: snyk-and-aws-workshop
+      Handler: index.lambda_handler
+      Role:
+        Fn::GetAtt:
+        - C9LambdaExecutionRole
+        - Arn
+      Runtime: python3.12
+      Environment:
+        Variables:
+          DiskSize:
+            Ref: C9InstanceVolumeSize
+      MemorySize: 256
+      Timeout: '600'
+      Code:
+        ZipFile: |
+          from __future__ import print_function
+          import boto3
+          import json
+          import os
+          import time
+          import traceback
+          import cfnresponse
+          import logging
+          logger = logging.getLogger(__name__)
+
+          def lambda_handler(event, context):
+              print(event.values())
+              print('context: {}'.format(context))
+              responseData = {}
+
+              status = cfnresponse.SUCCESS
+              
+              if event['RequestType'] == 'Delete':
+                  responseData = {'Success': 'Custom Resource removed'}
+                  cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')              
+              else:
+                  try:
+                      # Open AWS clients
+                      ec2 = boto3.client('ec2')
+                      ssm = boto3.client('ssm')
+
+                      # Get the InstanceId of the Cloud9 IDE
+                      instance = ec2.describe_instances(Filters=[{'Name': 'tag:Name','Values': ['aws-cloud9-'+event['ResourceProperties']['Cloud9Name']+'-'+event['ResourceProperties']['EnvironmentId']]}])['Reservations'][0]['Instances'][0]
+                      print('instance: {}'.format(instance))
+                      instance_id = instance['InstanceId']
+
+                      # Create the IamInstanceProfile request object
+                      iam_instance_profile = {
+                          'Arn': event['ResourceProperties']['LabIdeInstanceProfileArn'],
+                          'Name': event['ResourceProperties']['LabIdeInstanceProfileName']
+                      }
+                      print('Found IAM instance profile: {}'.format(iam_instance_profile))
+
+                      time.sleep(10)
+
+                      print('Waiting for the instance to be ready...')
+
+                      # Wait for Instance to become ready before adding Role
+                      instance_state = instance['State']['Name']
+                      print('Instance is currently in state'.format(instance_state))
+                      while instance_state != 'running':
+                          time.sleep(5)
+                          di = ec2.describe_instances(InstanceIds=[instance_id])
+                          instance_state = di['Reservations'][0]['Instances'][0]['State']['Name']
+                          print('Waiting for instance in state: {}'.format(instance_state))
+
+                      print('Instance is ready')
+
+                      reboot = False
+
+                      associations = ec2.describe_iam_instance_profile_associations(
+                          Filters=[
+                              {
+                                  'Name': 'instance-id',
+                                  'Values': [instance_id],
+                              },
+                          ],
+                      )
+
+                      if len(associations['IamInstanceProfileAssociations']) > 0:
+                        print('Replacing existing IAM profile...')
+                        for association in associations['IamInstanceProfileAssociations']:
+                          if association['State'] == 'associated':
+                            print("{} is active with state {}".format(association['AssociationId'], association['State']))
+
+                            if association['IamInstanceProfile']['Arn'] == event['ResourceProperties']['LabIdeInstanceProfileArn']:
+                              print("IAM instance profile is already set")
+                            else:
+                              print("Replacing IAM instance profile")
+                              reboot = True
+                              ec2.replace_iam_instance_profile_association(AssociationId=association['AssociationId'], IamInstanceProfile=iam_instance_profile)
+                      else:
+                        print('Associating IAM profile...')
+                        ec2.associate_iam_instance_profile(IamInstanceProfile=iam_instance_profile, InstanceId=instance_id)
+
+                      block_volume_id = instance['BlockDeviceMappings'][0]['Ebs']['VolumeId']
+
+                      block_device = ec2.describe_volumes(VolumeIds=[block_volume_id])['Volumes'][0]
+
+                      DiskSize = int(os.environ['DiskSize'])
+                      if block_device['Size'] < DiskSize:
+                        reboot = True
+
+                        print('Modifying block volume: {}'.format(block_volume_id))
+                        ec2.modify_volume(VolumeId=block_volume_id,Size=DiskSize)
+                        
+                        time.sleep(10)
+
+                        for i in range(1, 30):
+                          response = ec2.describe_volumes_modifications(
+                            VolumeIds=[
+                              block_volume_id
+                            ]
+                          )
+                          modify_state = response['VolumesModifications'][0]['ModificationState']
+                          if modify_state != 'modifying':
+                            print('Volume has been resized')
+                            break
+                          time.sleep(10)
+                      else:
+                        print('Volume is already sized')
+
+                      if reboot:
+                        # Reboot is required to avoid weird race condition with IAM role and SSM agent
+                        # It also causes the file system to expand in the OS
+                        print('Rebooting instance')
+
+                        ec2.reboot_instances(
+                            InstanceIds=[
+                                instance_id,
+                            ],
+                        )
+
+                        time.sleep(60)
+
+                        print('Waiting for instance to come online in SSM...')
+
+                        for i in range(1, 60):
+                          response = ssm.describe_instance_information(Filters=[{'Key': 'InstanceIds', 'Values': [instance_id]}])
+                          if len(response["InstanceInformationList"]) == 0:
+                            print('No instances in SSM')
+                          elif len(response["InstanceInformationList"]) > 0 and \
+                                response["InstanceInformationList"][0]["PingStatus"] == "Online" and \
+                                response["InstanceInformationList"][0]["InstanceId"] == instance_id:
+                            print('Instance is online in SSM')
+                            break
+                          time.sleep(10)
+
+                      ssm_document = event['ResourceProperties']['SsmDocument']
+
+                      print('Sending SSM command...')
+
+                      response = ssm.send_command(
+                        InstanceIds=[instance_id],
+                        DocumentName=ssm_document)
+
+                      command_id = response['Command']['CommandId']
+
+                      waiter = ssm.get_waiter('command_executed')
+
+                      waiter.wait(
+                        CommandId=command_id,
+                        InstanceId=instance_id,
+                        WaiterConfig={
+                          'Delay': 10,
+                          'MaxAttempts': 360
+                        }
+                      )
+
+                      responseData = {'Success': 'Started bootstrapping for instance: '+instance_id}
+                      cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')
+                      
+                  except Exception as e:
+                      status = cfnresponse.FAILED
+                      print(traceback.format_exc())
+                      responseData = {'Error': traceback.format_exc(e)}
+                  finally:
+                      cfnresponse.send(event, context, status, responseData, 'CustomResourcePhysicalID')
+
+################## SSM BOOTSRAP HANDLER ###############
+
+  C9OutputBucket:
+    Type: AWS::S3::Bucket
+    DeletionPolicy: Delete
+
+  C9SSMDocument: 
+    Type: AWS::SSM::Document
+    Properties: 
+      Tags:
+        - Key: Environment
+          Value: snyk-and-aws-workshop
+      DocumentType: Command
+      DocumentFormat: YAML
+      Content: 
+        schemaVersion: '2.2'
+        description: Bootstrap Cloud9 Instance
+        mainSteps:
+          - action: aws:runShellScript
+            name: C9bootstrap
+            inputs:
+              runCommand:
+                - '#!/bin/bash'
+                - export DEBIAN_FRONTEND=noninteractive
+                - !Sub export AWS_REGION=${AWS::Region}
+                - !Sub export AWS_ACCOUNTID=${AWS::AccountId}
+                - echo LANG=en_US.utf-8 >> /etc/environment
+                - echo LC_ALL=en_US.UTF-8 >> /etc/environment
+                - . /home/ubuntu/.bashrc
+                - sudo apt-get update
+                - sudo apt-get -y install sqlite telnet jq strace tree gcc python3 python3-pip gettext bash-completion at
+                - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+                - sudo apt-get install -y nodejs
+                - node --version
+                - npm --version
+                - sudo curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && \
+                - chmod +x ./snyk && \
+                - sudo mv ./snyk /usr/local/bin/
+                - sudo curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+                - chmod +x ./kubectl
+                - sudo mv ./kubectl /usr/local/bin/kubectl
+                - wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
+                - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+                - sudo apt-get update && sudo apt-get install -y terraform
+                - echo '=== Disable temporary managed credentials ==='
+                - !Sub |
+                    aws cloud9 update-environment --environment-id $C9_PID --managed-credentials-action DISABLE --region ${AWS::Region} &> /dev/null
+                - echo 'Removing AWS credentials files to ensure instance role is used' | tee -a /home/ubuntu/.bash_profile
+                - echo 'rm -vf ${HOME}/.aws/credentials &> /dev/null' | tee -a /home/ubuntu/.bash_profile
+                - echo 'rm -vf ${HOME}/.aws/config &> /dev/null' | tee -a /home/ubuntu/.bash_profile
+                - echo '=== CONFIGURE awscli and setting ENVIRONMENT VARS ==='
+                - echo "complete -C '/usr/local/bin/aws_completer' aws" >> /home/ubuntu/.bashrc
+                - mkdir -p /home/ubuntu/.aws
+                - echo '[default]' > /home/ubuntu/.aws/config
+                - echo 'output = json' >> /home/ubuntu/.aws/config
+                - !Sub echo 'region = ${AWS::Region}' >> /home/ubuntu/.aws/config
+                - chmod 600 /home/ubuntu/.aws/config
+                - echo 'PATH=$PATH:/usr/local/bin:/home/ubuntu/.local/bin' >> /home/ubuntu/.bashrc
+                - echo 'export PATH' >> /home/ubuntu/.bashrc
+                - !Sub echo 'export AWS_REGION=${AWS::Region}' >> /home/ubuntu/.bashrc
+                - !Sub echo 'export AWS_ACCOUNTID=${AWS::AccountId}' >> /home/ubuntu/.bashrc
+                - echo 'export NEXT_TELEMETRY_DISABLED=1' >> /home/ubuntu/.bashrc
+                - source <(kubectl completion bash)
+                - echo "source <(kubectl completion bash)" >> /home/ubuntu/.bashrc
+                - echo "alias k=kubectl" >> /home/ubuntu/.bashrc
+                - echo "complete -o default -F __start_kubectl k" >> /home/ubuntu/.bashrc
+                - source /home/ubuntu/.bashrc
+                - echo '=== CLEANING /home/ubuntu ==='
+                - aws cloud9 update-environment --environment-id $C9_PID --managed-credentials-action DISABLE --region $AWS_REGION
+                - rm -vf ${HOME}/.aws/credentials
+                - chown -R ubuntu:ubuntu /home/ubuntu/
+                - echo 'Checking for EKS cluster availability...'
+                - !Sub |
+                  CLUSTER_NAME=${EKSClusterName}
+                  until aws eks describe-cluster --name $CLUSTER_NAME --query 'cluster.status' --output text | grep -q 'ACTIVE'; do
+                    echo 'Waiting for EKS cluster $CLUSTER_NAME to become ACTIVE...'
+                    sleep 30
+                  done
+                  echo 'EKS cluster $CLUSTER_NAME is active. Configuring kubectl...'
+                  aws eks update-kubeconfig --name $CLUSTER_NAME
+                  kubectl cluster-info
+                  echo 'kubectl configured successfully for cluster: $CLUSTER_NAME.'
+                  echo "source <(kubectl completion bash)" >> /home/ubuntu/.bashrc
+                  echo "alias k=kubectl" >> /home/ubuntu/.bashrc
+                  echo "complete -o default -F __start_kubectl k" >> /home/ubuntu/.bashrc
+                  source /home/ubuntu/.bashrc
+                  echo 'Bootstrap completed with return code $?'
+                  aws eks update-kubeconfig --name $(aws eks list-clusters --query 'clusters[0]' --output text)
+
+
+
+  C9BootstrapAssociation: 
+    Type: AWS::SSM::Association
+    Properties: 
+      Name: !Ref C9SSMDocument
+      OutputLocation: 
+        S3Location:
+          OutputS3BucketName: !Ref C9OutputBucket
+          OutputS3KeyPrefix: bootstrapoutput
+      Targets:
+        - Key: "tag:SSMBootstrap"  # Corrected key format
+          Values:
+            - "Active"
+
+################## INSTANCE #####################
+
+  C9InstanceProfile:
+    Type: AWS::IAM::InstanceProfile
+    Properties:
+      Path: "/"
+      InstanceProfileName: "snyk-and-aws-workshop-admin"
+      Roles:
+      - Ref: C9Role
+
+
+  C9Instance:
+    DependsOn: C9BootstrapAssociation
+    Type: AWS::Cloud9::EnvironmentEC2
+    Properties:
+      Description: AWS Cloud9 instance for Snyk and AWS DevSecOps Workshop
+      AutomaticStopTimeMinutes: !Ref StopTimeMinutes
+      ImageId: ubuntu-22.04-x86_64
+      InstanceType:
+        Ref: C9InstanceType
+      Name: 
+        Ref: C9Name
+      OwnerArn: !If [RunonWorkshopStudio, !Sub "arn:aws:iam::${AWS::AccountId}:assumed-role/WSParticipantRole/Participant", !Ref "AWS::NoValue" ]
+      Tags: 
+        - 
+          Key: SSMBootstrap
+          Value: Active
+        - 
+          Key: Environment
+          Value: snyk-and-aws-workshop
+        - 
+          Key: Instance
+          Value: Cloud9
+
+################## EKS Bootstrap #####################
+
+  BuildProject:
+    Type: AWS::CodeBuild::Project
+    DependsOn: [C9Instance, C9InstanceProfile]
+    Properties:
+      Name: !Sub CodeBuild-${AWS::StackName}
+      ServiceRole: !Sub arn:aws:iam::${AWS::AccountId}:role/snyk-and-aws-workshop-admin
+      Artifacts:
+        Type: NO_ARTIFACTS
+      LogsConfig:
+        CloudWatchLogs:
+          Status:  ENABLED
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/amazonlinux2-x86_64-standard:5.0
+        EnvironmentVariables:
+          - Name: CFN_RESPONSE_URL
+            Value: !Ref WaitForStackCreationHandle
+          - Name: CLOUD9_INSTANCE_PROFILE_NAME
+            Value: !Ref C9InstanceProfile
+          - Name: CLOUD9_ENVIRONMENT_ID
+            Value: !Ref C9Instance
+          - Name: KMS_ARN
+            Value: !GetAtt KMSSecretsKey.Arn
+
+      Source:
+        Type: NO_SOURCE
+        BuildSpec:
+          !Sub |
+            version: 0.2
+            phases:
+              install:
+                runtime-versions:
+                  python: 3.12
+                commands:
+                  - echo ">>> installed python 3.12"
+              pre_build:
+                commands:
+                  - echo ">>> build cluster config"
+                  - |
+                    cat <<EOF > cluster-config.yaml
+
+                    apiVersion: eksctl.io/v1alpha5
+                    kind: ClusterConfig
+
+                    #Only use these availability zones
+                    availabilityZones:
+                      - ${AWS::Region}a
+                      - ${AWS::Region}b
+                      - ${AWS::Region}c
+
+                    metadata:
+                      name: ${EKSClusterName}
+                      region: ${AWS::Region}
+                      version: "${KubernetesVersion}"
+
+                    cloudWatch:
+                        clusterLogging:
+                            enableTypes: ["*"]
+
+                    secretsEncryption:
+                      keyARN: $KMS_ARN
+
+                    managedNodeGroups:
+                      - name: nodegroup
+                        instanceType: ${WorkerNodeInstanceType}
+                        desiredCapacity: 1
+                        minSize: 1
+                        maxSize: 2
+                        privateNetworking: true
+                        volumeSize: 100
+                        volumeType: gp3
+                        volumeEncrypted: true
+                        tags:
+                          'eks:cluster-name': ${EKSClusterName}
+                        iam:
+                          withAddonPolicies:
+                            imageBuilder: true
+                            autoScaler: true
+                            externalDNS: true
+                            certManager: true
+                            appMesh: true
+                            ebs: true
+                            fsx: true
+                            efs: true
+                            albIngress: true
+                            xRay: true
+                            cloudWatch: true
+                    EOF
+                  - echo ">>> install awscli "
+                  - pip3 install --upgrade --user awscli
+                  - echo ">>> install kubectl"
+                  - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+                  - chmod +x ./kubectl
+                  - curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+                  - mv -v /tmp/eksctl /usr/local/bin
+                  - eksctl version
+                  - export PATH=$PWD/:$PATH
+
+              build:
+                commands:
+                - echo ">>> find instance using environment Id= $CLOUD9_ENVIRONMENT_ID"
+                - CLOUD9_INSTANCE_ID=$(aws ec2 describe-instances --filter Name=tag:aws:cloud9:environment,Values=$CLOUD9_ENVIRONMENT_ID --query Reservations[0].Instances[0].InstanceId --output text)
+                - echo ">>> cloud9 instance id= $CLOUD9_INSTANCE_ID"
+                - eksctl create cluster -f cluster-config.yaml
+              post_build:
+                commands:
+                  # CODEBUILD_BUILD_SUCCEEDING = 1 Set to 0 if the build is failing, or 1 if the build is succeeding.
+                  - echo ">>> build status $CODEBUILD_BUILD_SUCCEEDING "
+                  - |
+                    if [ "$CODEBUILD_BUILD_SUCCEEDING" -eq "1" ]; then
+                      curl -X PUT -H 'Content-Type:' --data-binary '{"Status" : "SUCCESS","Reason" : "Creation Complete", "UniqueId" : "$CODEBUILD_BUILD_ID","Data" : "Creation complete"}' $CFN_RESPONSE_URL
+                    else
+                      curl -X PUT -H 'Content-Type:' --data-binary '{"Status" : "FAILURE","Reason" : "Creation Failed", "UniqueId" : "$CODEBUILD_BUILD_ID","Data" : "See Codebuild logs for details. $CODEBUILD_LOG_PATH"}' $CFN_RESPONSE_URL
+                    fi
+
+      TimeoutInMinutes: 60
+
+
+  WaitForStackCreationHandle:
+    Type: AWS::CloudFormation::WaitConditionHandle
+
+  WaitCondition:
+    Type: AWS::CloudFormation::WaitCondition
+    # dont start till we create a lambda function
+    DependsOn: [CustomTriggerBuild]
+    Properties:
+      Handle: !Ref WaitForStackCreationHandle
+      # wait for 55 minutes before giving up
+      Timeout: 3300
+      # success or failure signal count
+      Count: 1
+
+  CustomTriggerBuild:
+    Type: Custom::ManageCloud9IDEIamRole
+    DependsOn: BuildProject
+    Properties:
+      ServiceToken: !GetAtt TriggerBuildLambda.Arn
+      CodebuildProjectName: !Ref BuildProject
+
+  TriggerBuildLambdaIamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - lambda.amazonaws.com
+                - codebuild.amazonaws.com
+            Action:
+              - 'sts:AssumeRole'
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/CloudWatchLogsFullAccess
+        - arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess
+      Policies:
+        - PolicyName: !Sub IAMPolicy-${AWS::StackName}
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                    - codebuild:*
+                Resource: !GetAtt BuildProject.Arn
+
+  TriggerBuildLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Description: function to retrieve User info
+      Handler: index.handler
+      Role: !GetAtt TriggerBuildLambdaIamRole.Arn
+      Runtime: python3.12
+      Code:
+        ZipFile: |
+          import boto3
+          import logging
+          import sys
+          import json
+          import urllib3
+
+          logger = logging.getLogger()
+          logger.setLevel(logging.INFO)
+          http = urllib3.PoolManager()
+
+
+          codebuild_client = boto3.client('codebuild')
+
+          # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/cfn-lambda-function-code-cfnresponsemodule.html
+          def handler(event, context):
+              logger.info('Incoming Event: {0}'.format(event))
+              response = {}
+              response['PhysicalResourceId'] = 'hardcodedphyscialid'
+              response['StackId'] = event['StackId']
+              response['RequestId'] = event['RequestId']
+              response['LogicalResourceId'] = event['LogicalResourceId']
+              cfn_response_url = event['ResponseURL']
+
+              if event['RequestType'] == 'Delete':
+                  # return
+                  logger.info('Nothing to do. Request Type : {0}'.format(event['RequestType']))
+                  response['Status'] = 'SUCCESS'
+
+              elif event['RequestType'] == 'Create' or event['RequestType'] == 'Update':
+
+                try:
+                  codebuild_client.start_build(projectName=event['ResourceProperties']['CodebuildProjectName'])
+                  response['Status'] = 'SUCCESS'
+
+                except:
+                  logging.error('Error: {0}'.format(sys.exc_info() ))
+                  response['Status'] = 'FAILED'
+
+              http.request('PUT', cfn_response_url, body=json.dumps(response).encode('utf-8'), headers={'Content-Type': 'application/json'})
+              return 'Done'
+          
+
+Outputs: 
+  Cloud9IDE:
+    Value:
+      Fn::Join:
+      - ''
+      - - https://
+        - Ref: AWS::Region
+        - ".console.aws.amazon.com/cloud9/ide/"
+        - Ref: C9Instance
+        - "?region="
+        - Ref: AWS::Region
+  C9RoleArn:
+    Description: Cloud9 Role ARN
+    Value: !GetAtt C9Role.Arn
