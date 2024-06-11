@@ -10,7 +10,8 @@ In order to prevent charges to your account we recommend cleaning up the infrast
 
 ```bash
 # Delete CloudFormation Stacks
-aws cloudformation delete-stack --stack-name mod-3b406ca5c0ea4006
+aws cloudformation delete-stack --stack-name $(aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE --query "StackSummaries[0].StackName" --output text)
+
 
 echo 'Completed cleanup.'
 ```
