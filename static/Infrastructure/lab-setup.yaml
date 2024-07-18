@@ -396,7 +396,7 @@ Resources:
                 - echo LC_ALL=en_US.UTF-8 >> /etc/environment
                 - . /home/ubuntu/.bashrc
                 - sudo apt-get update
-                - sudo apt-get -y install sqlite telnet jq strace tree gcc python3 python3-pip gettext bash-completion at
+                - sudo apt-get -y install sqlite telnet jq yq pngcrush moreutils strace tree gcc python3 python3-pip gettext bash-completion at 
                 - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
                 - sudo apt-get install -y nodejs
                 - node --version
