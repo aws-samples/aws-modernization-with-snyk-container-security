@@ -36,8 +36,9 @@ git clone https://github.com/$GithubId/goof && cd goof
 
 This copies the Repo files to your Cloud9 environment. 
 
+
 ## Run setup scripts
-In order to install all of the needed tools, there are a couple of setup scripts in the `cloud9-setup` directory you should run:
+If you are running this workshop through an AWS Hosted Event, these tools have already been installed. However if you are self-paced, there are a couple of setup scripts in the `cloud9-setup` directory you should run:
 
 ### Tool setup
 The `setup.sh` script installs and/or updates the following tools:
@@ -53,26 +54,3 @@ cd cloud9-setup
 ./setup.sh
 . ~/.bashrc #source the ~/.bashrc to make sure all environment settings are in place
 ```
-
-Confirm that you have access to your EKS cluster by running the following command
-
-```sh
-kubectl get nodes
-```
-
-If you have access you should see something like the following:
-
-```
-NAME                              STATUS   ROLES    AGE    VERSION
-ip-192-168-113-37.ec2.internal    Ready    <none>   104m   v1.27.1-eks-2f008fe
-ip-192-168-140-151.ec2.internal   Ready    <none>   104m   v1.27.1-eks-2f008fe
-ip-192-168-169-182.ec2.internal   Ready    <none>   104m   v1.27.1-eks-2f008fe
-```
-
-#### kubectl troubleshooting:
-If you are getting connection errors from kubectl, you may need to update your kubeconfig file using the `aws` CLI tool:
-      
-```sh
-aws eks update-kubeconfig --name eks-workshop
-```
-Then repeat the prior `kubectl get nodes` command.
