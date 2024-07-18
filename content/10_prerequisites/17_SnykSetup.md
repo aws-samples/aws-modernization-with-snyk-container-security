@@ -7,8 +7,6 @@ weight: 17
 # Snyk Setup Instructions
 You will need a Snyk account to run scans.  Snyk is available for free and all you need is a valid email address to register.  Once you register, you can perform scans and view results locally or on the website.
 
-## Setting up your Snyk Account
-
 ### Create or Login to Snyk account
 [Login or Create a free account here.](https://snyk.co/KubeConUS-2023)
 
@@ -27,12 +25,15 @@ You can read more about Snyk Access Token from their docs here.
 
 ## Setting up the Snyk CLI
 
-The Snyk Command-Line-Interface (CLI) is highly portable and very popular with end users.  We’ll use the Snyk CLI in this workshop to collect and send results about your vulnerabilities.
+The Snyk Command-Line-Interface (CLI) is highly portable and very popular with end users. We’ll use the Snyk CLI in this workshop to collect and send results about your vulnerabilities.
 
-Start by downloading the Snyk CLI to your environment.  In this workshop, we’ll prescribe steps to save time and you can find more details on the Snyk documentation site at:
+Start by downloading the Snyk CLI to your environment. In this workshop, we’ll prescribe steps to save time and you can find more details on the Snyk documentation site at:
 https://docs.snyk.io/snyk-cli/install-the-snyk-cli
 
-At the Cloud9 prompt, enter these commands to download the binary for Linux and move them to your bin folder (/usr/local/bin):
+Note: If you are running this through an AWS Hosted Event, the Snyk CLI has already been installed on your Cloud9 instance.
+
+### Installing Snyk CLI
+If you are running this workshop at your own pace, you will need to install the Snyk CLI yourself. At the Cloud9 prompt, enter these commands to download the binary for Linux and move them to your bin folder (/usr/local/bin):
 
 ```
 curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && \
@@ -40,7 +41,8 @@ chmod +x ./snyk && \
 sudo mv ./snyk /usr/local/bin/
 ```
 
-In Cloud9 environments, you will need to authenticate on the CLI with your Auth token.  Previously, you should have created an Auth token.  If not, navigate to your Snyk Account (https://app.snyk.io/account), and get your AUTH_TOKEN by clicking into your Account Settings -> Auth Token section.
+## Authenticating the Snyk CLI
+In both AWS-hosted events and self-paced environments, you will need to authenticate the CLI with your Auth token.  Previously, you should have created an Auth token.  If not, navigate to your Snyk Account (https://app.snyk.io/account), and get your AUTH_TOKEN by clicking into your Account Settings -> Auth Token section.
 
 In the KEY field, click your “click to show” box to copy your Auth token.
 
