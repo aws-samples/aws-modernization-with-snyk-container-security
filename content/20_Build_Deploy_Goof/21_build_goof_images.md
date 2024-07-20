@@ -9,9 +9,9 @@ Now that you've cloned the repo to your working environment, we'll build a few c
 ## Create the ECR repositories
 The following commands will create 3 repositories for the images we will be building:
 
-```sh
-aws ecr create-repository --repository-name thumbnailer
-aws ecr create-repository --repository-name todolist
+```bash
+aws ecr create-repository --repository-name thumbnailer && \
+aws ecr create-repository --repository-name todolist && \
 aws ecr create-repository --repository-name log4shell-server
 ```
 After each finishes you should get a JSON reponse similar to the following:
