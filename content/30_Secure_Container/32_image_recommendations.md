@@ -64,7 +64,7 @@ As you can see, the Snyk engine is recommending we consider upgrading to newer b
 Let's take Snyk's recommendation and upgrade our base image:
 
 Double click on the `Dockerfile` under the `thumbnailer` directory in your Cloud9 IDE sidebar and change the first line from:
-```docker
+```
 FROM python:3.11.1
 ```
 To:
