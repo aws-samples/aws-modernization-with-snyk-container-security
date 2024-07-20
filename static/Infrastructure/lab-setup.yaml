@@ -395,8 +395,7 @@ Resources:
                 - echo LANG=en_US.utf-8 >> /etc/environment
                 - echo LC_ALL=en_US.UTF-8 >> /etc/environment
                 - . /home/ubuntu/.bashrc
-                - sudo apt-get update
-                - sudo apt-get -y install sqlite telnet jq yq pngcrush moreutils strace tree gcc python3 python3-pip gettext bash-completion at 
+                - sudo apt-get update && sudo apt-get upgrade -y
                 - curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
                 - sudo apt-get install -y nodejs
                 - node --version
@@ -410,6 +409,11 @@ Resources:
                 - wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg > /dev/null
                 - echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
                 - sudo apt-get update && sudo apt-get install -y terraform
+                - sudo apt-get -y install sqlite
+                - sudo apt-get -y install telnet
+                - sudo apt-get -y install jq
+                - sudo apt-get -y install pngcrush
+                - sudo apt-get -y install moreutils
                 - echo '=== Disable temporary managed credentials ==='
                 - !Sub |
                     aws cloud9 update-environment --environment-id $C9_PID --managed-credentials-action DISABLE --region ${AWS::Region} &> /dev/null
