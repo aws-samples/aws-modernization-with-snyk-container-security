@@ -65,7 +65,7 @@ The pods should all show **"Running"** in their **STATUS** field, and services w
 {{% /notice %}}
 
 The following will save the `LoadBalancer` services `EXTERNAL_IP` values for later use:
-```
+```bash
 THUMBNAILER_LB=$(kubectl get svc thumbnailer -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 TODOLIST_LB=$(kubectl get svc todolist -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 ```
