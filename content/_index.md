@@ -4,7 +4,7 @@ chapter: true
 weight: 1
 ---
 
-# Application Modernization with AWS, Snyk
+# Intro
 
 ![Snyk](/images/snyk-card.png)
 
@@ -27,4 +27,10 @@ Snyk is a Cloud Native Application Security solution that enables developers and
 - Solutions Architects
 - Site Reliability Engineers (SRE's)
 - Anyone that loves containers and wants to learn more!
+
+## Cost
+This Workshop will incur costs. Its important to be aware that once the lab is completed, we highly advise to use the instructions to delete any resources to avoid any additional costs.
+
+## Duration
+The workshop breaks down into four sections. Plan on 2-3 hours for completion of the entire workshop.
 
