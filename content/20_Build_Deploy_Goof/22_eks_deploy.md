@@ -40,7 +40,7 @@ To check the status of the pods as the application comes up, use the following c
 kubectl get all
 ```
 The output should look something like this:
-```sh
+```
 $ kubectl get all
 NAME                               READY   STATUS    RESTARTS   AGE
 pod/goof-7bd8895c4d-zl8ln          1/1     Running   0          19s
@@ -82,7 +82,7 @@ The eagle-eyed amoung you probably noticed that only two deployments and service
 ```sh
 kubectl get all -n darkweb
 ```
-```sh
+```
 $ kubectl get all -n darkweb
 NAME                            READY   STATUS             RESTARTS   AGE
 pod/log4shell-7d8c6fbfd-84l8p   1/1     Running            0          154m
