@@ -391,7 +391,7 @@ Resources:
                 - '#!/bin/bash'
                 - export DEBIAN_FRONTEND=noninteractive
                 - !Sub export AWS_REGION=${AWS::Region}
-                - !Sub export AWS_ACCOUNTID=${AWS::AccountId}
+                - !Sub export AWS_ACCOUNT_ID=${AWS::AccountId}
                 - echo LANG=en_US.utf-8 >> /etc/environment
                 - echo LC_ALL=en_US.UTF-8 >> /etc/environment
                 - . /home/ubuntu/.bashrc
@@ -430,7 +430,7 @@ Resources:
                 - echo 'PATH=$PATH:/usr/local/bin:/home/ubuntu/.local/bin' >> /home/ubuntu/.bashrc
                 - echo 'export PATH' >> /home/ubuntu/.bashrc
                 - !Sub echo 'export AWS_REGION=${AWS::Region}' >> /home/ubuntu/.bashrc
-                - !Sub echo 'export AWS_ACCOUNTID=${AWS::AccountId}' >> /home/ubuntu/.bashrc
+                - !Sub echo 'export AWS_ACCOUNT_ID=${AWS::AccountId}' >> /home/ubuntu/.bashrc
                 - echo 'export NEXT_TELEMETRY_DISABLED=1' >> /home/ubuntu/.bashrc
                 - source <(kubectl completion bash)
                 - echo "source <(kubectl completion bash)" >> /home/ubuntu/.bashrc
