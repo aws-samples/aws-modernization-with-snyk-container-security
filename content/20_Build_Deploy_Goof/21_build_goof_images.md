@@ -71,8 +71,10 @@ docker build -t $REPO/log4shell-server:latest todolist/exploits/log4shell-server
 ```
 
 When all of the build processes are complete, if you run `docker images` you should see three rows like this:
+```bash
+docker images
 ```
-$ docker images                                                                                                                                                             
+```               
 REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
 012345678901.dkr.ecr.us-east-2.amazonaws.com/log4shell-server   latest    a42b0d443129   10 minutes ago   535MB
 012345678901.dkr.ecr.us-east-2.amazonaws.com/todolist           latest    57ad8c044dbd   15 minutes ago   612MB
@@ -82,7 +84,7 @@ REPOSITORY         TAG       IMAGE ID       CREATED          SIZE
 ## Push container images to ECR
 Next, we want to push the images to ECR but before we can push them we need to create their respective repositories.
 
-```sh
+```bash
 docker push $REPO/thumbnailer:latest
 docker push $REPO/todolist:latest
 docker push $REPO/log4shell-server:latest
