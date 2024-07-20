@@ -56,7 +56,7 @@ The simplest option is to replace the Flask development server with [gunicorn](h
 
 Double click on the `Dockerfile` under the `thumbnailer` directory in your Cloud9 IDE sidebar and change the line where we install packages from:
 
-```docker
+```
 RUN apk add imagemagick
 ```
 To:
@@ -66,7 +66,7 @@ RUN apk add imagemagick py3-gunicorn
 
 We also need to change the entrypoint commands to start gunicorn. Change the command from:
 
-```docker
+```
 CMD ["webapp.py"]
 ```
 To:
@@ -102,7 +102,7 @@ privleges on the host.
 Thankfully, fixing this is relatively straightforward. In the Dockerfile, after the line:
 
 
-```docker
+```
 RUN apk add imagemagick py3-gunicorn 
 ```
 
@@ -116,7 +116,7 @@ WORKDIR /app
 We also need to tweak the line that creates the upload directory, so that it uses a local directory
 that the new user can write to. Change the line:
 
-```docker
+```
 RUN mkdir /uploads
 ```
 
@@ -168,7 +168,7 @@ kubectl scale deployment thumbnailer --replicas=1
 
 Let's try checking the user again. First get the pod name again, as it will have changed in the restart:
 
-```
+```bash
 kubectl get pods
 ```
 
