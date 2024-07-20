@@ -24,12 +24,24 @@ kubectl create ns snyk-aws
 
 # Set the current context to use the new namespace
 kubectl config set-context --current --namespace snyk-aws
+
+# Verify snyk-aws Namespace was successfully created
+kubectl get ns
+```
+```
+$ kubectl get ns
+NAME              STATUS   AGE
+default           Active   124m
+kube-node-lease   Active   124m
+kube-public       Active   124m
+kube-system       Active   124m
+snyk-aws          Active   113s
 ```
 
 ## Deploy the applications
 
 Ensure the `REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
-```
+```bash
 cat manifests/*.yaml | envsubst | kubectl apply -f -
 ```
 
@@ -73,8 +85,8 @@ TODOLIST_LB=$(kubectl get svc todolist -o jsonpath='{.status.loadBalancer.ingres
 Once both are running, the application is accessible from the web. Get the DNS name for your app running the following command. 
 
 ```bash
-echo $THUMBNAILER_LB
-echo $TODOLIST_LB 
+echo http://$THUMBNAILER_LB
+echo http://$TODOLIST_LB 
 ``` 
 
 ### Validate our Log4Shell exploit server is running
@@ -98,7 +110,8 @@ NAME                                  DESIRED   CURRENT   READY   AGE
 replicaset.apps/log4shell-7d8c6fbfd   1         1         1       154m
 replicaset.apps/log4shell-fc6565dbc   1         1         0       2m2s
 ```
-Note: services in this namespace will not get external ips as they are not running as a loadbalancer type.
+### **Note:**
+Services in this namespace will not get external ips as they are not running as a loadbalancer type.
 
 ## Success!
 
