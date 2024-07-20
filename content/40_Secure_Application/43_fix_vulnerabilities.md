@@ -6,7 +6,7 @@ weight = 43
 
 ## Fix the vulnerability using a Snyk Pull Request
 
-Snyk accelerates remediation via Pull Requests to upgrade dependencies to non-vulnerable versions. Back in Snyk, click into the `todolist/todolist-web-struts/pom.xml` project.
+Snyk accelerates remediation via Pull Requests to upgrade dependencies to non-vulnerable versions. Back in [Snyk](https://app.snyk.io/), click into the `todolist/todolist-web-struts/pom.xml` project.
 
 ![snyk-project-list](/images/snyk-project-list.png)
 
