@@ -10,7 +10,7 @@ AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets y
 
 ## Access AWS Cloud9 in AWS Management Console 
 
-Once you have logged into the AWS Management Console from your Workshop Studio event dashboard page, you will already have an EKS cluster and Cloud9 environment. [Click here to access your AWS Cloud9 instance](https://us-west-2.console.aws.amazon.com/cloud9control/home?region=us-west-2#/product)
+Once you have logged into the AWS Management Console from your Workshop Studio event dashboard page, you will already have an EKS cluster and Cloud9 environment. Click to access your [AWS Cloud9 instance](https://us-west-2.console.aws.amazon.com/cloud9control/home?region=us-west-2#/product).
 
 ![cloudd9](/images/workshop-studio-cloud9-dashboard.png)
 
