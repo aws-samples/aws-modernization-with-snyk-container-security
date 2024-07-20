@@ -1,14 +1,14 @@
 ---
-title: "Cloud9 Setup"
+title: "AWS Cloud9 Setup"
 chapter: true
 weight: 11
 ---
 
 ## Set up the Workspace
 
-[AWS Cloud9](https://aws.amazon.com/cloud9/) is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes prepackaged with essential tools for popular programming languages, including JavaScript, Python, PHP, and more, so you don’t need to install files or configure your laptop for this workshop.
+AWS Cloud9 is a cloud-based integrated development environment (IDE) that lets you write, run, and debug your code with just a browser. It includes a code editor, debugger, and terminal. Cloud9 comes prepackaged with essential tools for popular programming languages, including JavaScript, Python, PHP, and more, so you don’t need to install files or configure your laptop for this workshop.
 
-## Access Cloud9 in AWS Management Console 
+## Access AWS Cloud9 in AWS Management Console 
 
 Once you have logged into the AWS Management Console from your Workshop Studio event dashboard page, you will already have an EKS cluster and Cloud9 environment. A few additional steps are required to configure Cloud9 and install the tools as follows.
 
