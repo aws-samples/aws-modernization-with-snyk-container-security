@@ -26,7 +26,7 @@ Check for the pod to return to "Running" state with `kubectl get pod`
 kubectl get pod
 ```
 
-```sh
+```
 $ kubectl get pod
 NAME                           READY   STATUS              RESTARTS   AGE
 thumbnailer-6bbfb9cb98-p8956   0/1     ContainerCreating   0          11s
