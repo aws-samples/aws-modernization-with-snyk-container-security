@@ -30,12 +30,13 @@ The Snyk Command-Line-Interface (CLI) is highly portable and very popular with e
 Start by downloading the Snyk CLI to your environment. In this workshop, we’ll prescribe steps to save time and you can find more details on the Snyk documentation site at:
 https://docs.snyk.io/snyk-cli/install-the-snyk-cli
 
-Note: If you are running this through an AWS Hosted Event, the Snyk CLI has already been installed on your Cloud9 instance.
+### **Note:**
+If you are running this through an AWS Hosted Event, the Snyk CLI has already been installed on your Cloud9 instance.
 
 ### Installing Snyk CLI
 If you are running this workshop at your own pace, you will need to install the Snyk CLI yourself. At the Cloud9 prompt, enter these commands to download the binary for Linux and move them to your bin folder (/usr/local/bin):
 
-```
+```bash
 curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && \
 chmod +x ./snyk && \
 sudo mv ./snyk /usr/local/bin/
@@ -48,7 +49,7 @@ In the KEY field, click your “click to show” box to copy your Auth token.
 
 You can then run this command where AUTH_TOKEN is the value you copied.
 
-```
+```bash
 snyk auth AUTH_TOKEN.
 ```
 
@@ -60,7 +61,7 @@ That should be it!  Your response should look like the following:
 
 If you are not on a Cloud9 environment, then your CLI should be able to start up a web browser and you can authenticate with this command:
 
-```
+```bash
 snyk auth
 ```
 
