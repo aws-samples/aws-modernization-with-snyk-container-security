@@ -5,6 +5,6 @@ weight = 10
 +++
 
 # Getting Started
-To start the workshop, Click on "at an AWS event" drop-down or Next for Self-Paced Instructions.
+To start the workshop, Click on [at an AWS event](aws_event/index.md) in the drop-down or Next for Self-Paced Instructions.
 
 {{% children showhidden="false" %}}
