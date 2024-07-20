@@ -12,7 +12,11 @@ We'll start by taking a look at the logs from the thumbnailer. First we'll need 
 pod:
 
 ```bash
-kubectl get pods
+# Get the name of the pod containing "thumbnailer" in its name
+POD_NAME=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep thumbnailer)
+
+# Print the pod name
+echo $POD_NAME
 ```
 
 ```
@@ -23,8 +27,8 @@ todolist-778ddc9684-kfjgm      1/1     Running   0          59m
 
 Take the full name of the thumbnailer pod (yours will different) and put it into the `logs` command:
 
-```
-kubectl logs thumbnailer-<id>
+```bash
+kubectl logs $POD_NAME
 ```
 
 
@@ -77,8 +81,8 @@ Before we rebuild and redeploy the image, there's another simple improvement we 
 make. At the moment, the main process in the container is running as the root user. We can see this by
 running `ps` in the container, using the same pod name as before:
 
-```
-kubectl exec thumbnailer-<id> -- ps -ux
+```bash
+kubectl exec $POD_NAME -- ps -ux
 ```
 
 And you should get something similar to:
@@ -156,7 +160,7 @@ docker build -t $REPO/thumbnailer .
 And as before, push the image and deploy the application:
 
 
-```sh
+```bash
 docker push $REPO/thumbnailer:latest
 kubectl scale deployment thumbnailer --replicas=0
 kubectl scale deployment thumbnailer --replicas=1
@@ -179,8 +183,8 @@ todolist-778ddc9684-kfjgm      1/1     Running   0          141m
 The `ps` implementation in the Chainguard image is a little different, so we don't need the
 arguments:
 
-```
-kubectl exec thumbnailer-<id> -- ps
+```bash
+kubectl exec $POD_NAME -- ps
 ```
 
 Which will output something similar to:
