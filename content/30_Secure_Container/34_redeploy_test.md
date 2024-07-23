@@ -4,16 +4,14 @@ chapter = false
 weight = 34
 +++
 
-With our image rebuilt, let's push it up to ECR and redeploy the more secure build of the application
-
+Now that we have rebuilt our image, let's push it up to the ECR and re-deploy the more secure build of the application.
 ## Push to ECR
 ```sh
 docker push $REPO/thumbnailer:latest
 ```
 
 ## Re-deploy the Application to EKS
-Now that the newer image is in the repo, deploy it to EKS by scaling the goof deployment with kubectl. The deployment's ImagePullPolicy forces EKS to pull the latest image from ECR.
-
+Deploy it to EKS by scaling the goof deployment with kubectl now that the newer image is in the repo. The ImagePullPolicy of the deployment will force EKS to pull the latest image from the ECR.
 ```sh
 kubectl scale deployment thumbnailer --replicas=0
 kubectl scale deployment thumbnailer --replicas=1
