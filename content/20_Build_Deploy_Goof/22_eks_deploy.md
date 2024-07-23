@@ -40,6 +40,10 @@ snyk-aws          Active   113s
 
 ## Deploy the applications
 
+[!CAUTION]
+This workshop deploys a Log4Shell exploit server. This should never be ran in a Production Environment. Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.
+
+
 Ensure the `REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
 ```bash
 cat manifests/*.yaml | envsubst | kubectl apply -f -
@@ -82,11 +86,11 @@ THUMBNAILER_LB=$(kubectl get svc thumbnailer -o jsonpath='{.status.loadBalancer.
 TODOLIST_LB=$(kubectl get svc todolist -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
 ```
 
-Once both are running, the application is accessible from the web. Get the DNS name for your app running the following command. 
+Once both are running, the application is accessible from the web. Get the DNS name for your app running the following commands: 
 
 ```bash
-echo http://$THUMBNAILER_LB
-echo http://$TODOLIST_LB 
+echo Thumbnailer Loadbalancer: http://$THUMBNAILER_LB \ &&
+echo Todo List Loadbalancer: http://$TODOLIST_LB 
 ``` 
 
 ### Validate our Log4Shell exploit server is running
@@ -110,8 +114,8 @@ NAME                                  DESIRED   CURRENT   READY   AGE
 replicaset.apps/log4shell-7d8c6fbfd   1         1         1       154m
 replicaset.apps/log4shell-fc6565dbc   1         1         0       2m2s
 ```
-### **Note:**
-Services in this namespace will not get external ips as they are not running as a loadbalancer type.
+[!NOTE]
+Services in this namespace will not get external IP's as they are not running as a loadbalancer type.
 
 ## Success!
 
