@@ -31,7 +31,7 @@ sudo mv /tmp/eksctl /usr/local/bin
 This should get you the binary where the following command should show how many EKS clusters you have in your environment.  At the start of the workshop, you will have no clusters.
 
 ```
-eksctl get cluster --region us-east-1
+eksctl get cluster --region us-west-2
 ```
 
 ## Install kubectl
@@ -61,10 +61,10 @@ One easy way to setup an EKS cluster is to run the command as shown below in you
 
 ```
 eksctl create cluster --name eksworkshop-eksctl \
-        --region us-east-1 \
-        --zones=us-east-1a,us-east-1b,us-east-1c \
+        --region us-west-2 \
+        --zones=us-west-2a,us-west-2b,us-west-2c \
         --instance-types=t3.small,t3.medium,t3.large,t2.medium,t2.small \
-        --version=1.27 \
+        --version=1.30 \
         --with-oidc 
 ```
 
