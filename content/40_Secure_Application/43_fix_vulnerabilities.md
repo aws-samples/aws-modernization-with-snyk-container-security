@@ -12,10 +12,11 @@ Snyk accelerates remediation via Pull Requests to upgrade dependencies to non-vu
 
 Now scroll down to see the list of vulnerabilities. For each Vulnerability, Snyk displays:
 
-- The module that introduced it and, in the case of transitive dependencies, its direct dependency,
+- The module that introduced it, and, in the case of transitive dependencies, the module that directly depends on it
 - Details on the path and proposed Remediation, as well as the specific vulnerable function.
 
-Find the Remote Code Execution (RCE) vulnerability in `log4j-core` by searching for it in the search bar. (although it probably will be at the top of the list)
+Find the Remote Code Execution (RCE) vulnerability in `log4j-core` by searching for it in the search bar. 
+Note: It is likely to be at the very top of the list
 
 ![log4shell-issue](/images/log4shell-issue.png)
 
