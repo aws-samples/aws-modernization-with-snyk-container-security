@@ -6,7 +6,7 @@ weight = 91
 
 ### Well Done
 
-🎉 Congratulations! 🎉 You have completed today's worshop on migrating and modernizing on AWS! 
+🎉 Congratulations! 🎉 You have completed today's workshop on migrating and modernizing on AWS! 
 
 ### Recap on what you have learned
 Today we've learned:
