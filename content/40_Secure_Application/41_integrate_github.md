@@ -6,7 +6,7 @@ weight = 41
 
 ## Integrate Snyk with the Goof GitHub Repo
 
-To check for issues in the application's Open Source dependencies, in this example we will use the Snyk GitHub integration to connect Snyk to the application's GitHub Repository.
+In this example, we will use the Snyk GitHub integration to connect Snyk to the application's GitHub repository to check for problems in the application's open source dependencies.
 
 ### Set up GitHub integration
 
@@ -28,8 +28,8 @@ Now that Snyk is connected to your GitHub Account, import the Repo into Snyk as 
 
 ## Review the list of Vulnerabilities
 
-When the import completes, Snyk displays the issue counts next to the files that introduced the issues. Issues in the Open Source components in our Goof app are displayed, the one we will be looking at are in the Maven `todolist/todolist-web-struts/pom.xml` file.
+When the import completes, Snyk displays the issue counts next to the files that introduced the issues. Issues in the open source components in our Goof application are displayed, the ones we want to look at are in the Maven `todolist/todolist-web-struts/pom.xml` file.
 
 ![snyk-project-list](/images/snyk-project-list.png)
 
-Before investigating the issues, let's explore an example of the invisible risks Open Source components can bundle into our application.
+Before investigating the issues, let's explore an example of the invisible risks that open source components can bundle into our application.
