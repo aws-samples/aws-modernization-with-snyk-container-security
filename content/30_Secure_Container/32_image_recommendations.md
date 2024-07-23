@@ -8,7 +8,7 @@ weight = 32
 
 Vulnerable components like the version of ImageMagick present in our container image can be identified by Snyk. Developers using the Snyk CLI can run `snyk container test` to scan containers to get vulnerability information and base image upgrade guidance. 
 
-Scan the image by running the following command (assuming you are cd'ed to the thumbnailer directory of your goof repo). 
+Scan the image (assuming you are in the thumbnailer directory of your goof repo) by running the following command:
 
 ```sh
 snyk container test $REPO/thumbnailer:latest --file=Dockerfile --exclude-app-vulns
@@ -72,7 +72,7 @@ To:
 FROM python:3.11.5
 ```
 ### **Note:**
-Dont to forget to save your Dockerfiles with your changes moving forward.
+Dont to forget to save your Dockerfile with your changes moving forward.
 
 Now, rebuild the image:
 ```bash
