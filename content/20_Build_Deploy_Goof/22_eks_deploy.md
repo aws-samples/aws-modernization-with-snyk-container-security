@@ -5,7 +5,7 @@ weight = 22
 +++
 
 
-For this workshop we created an Amazon EKS cluster where we run the Goof apps and you are now going to deploy the applications we build into it.
+For the purpose of this workshop, we have created an Amazon EKS cluster on which we will run the "Goof apps" and you will now deploy the applications that we have built on it.
 
 ## Update the Kubeconfig file
 
