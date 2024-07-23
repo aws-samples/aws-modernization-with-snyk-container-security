@@ -60,7 +60,7 @@ kubectl version --output=yaml
 One easy way to setup an EKS cluster is to run the command as shown below in your Cloud9 environment.
 
 ```
-eksctl create cluster --name eksworkshop-eksctl \
+eksctl create cluster --name snyk-eks \
         --region us-west-2 \
         --zones=us-west-2a,us-west-2b,us-west-2c \
         --instance-types=t3.small,t3.medium,t3.large,t2.medium,t2.small \
