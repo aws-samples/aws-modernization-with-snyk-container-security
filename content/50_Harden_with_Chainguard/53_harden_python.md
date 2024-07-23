@@ -17,12 +17,12 @@ POD_NAME=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | gr
 
 # Print the pod name
 echo $POD_NAME
+kubectl get pods $POD_NAME
 ```
 
 ```
 NAME                           READY   STATUS    RESTARTS   AGE
 thumbnailer-6cc796bd56-lkm2x   1/1     Running   0          131m
-todolist-778ddc9684-kfjgm      1/1     Running   0          59m
 ```
 
 Take the full name of the thumbnailer pod (yours will different) and put it into the `logs` command:
@@ -74,6 +74,8 @@ To:
 ENTRYPOINT ["gunicorn"]
 CMD ["--bind", "0.0.0.0:5000", "webapp:app"]
 ```
+[!TIP]
+Dont forget to save your Dockerfile!
 
 ## Don't Run as Root
 
@@ -125,12 +127,14 @@ Remove the `/` so that it becomes:
 ```docker
 RUN mkdir uploads
 ```
+[!TIP]
+Dont forget to save your Dockerfile!
 
 Chainguard images come with the nonroot user predefined, so we don't have to create a new user. The
 `USER` instruction will take effect for subsequent lines in the Dockerfile and when the container is
 started. 
 
-The complete Dockerfile should now look like this (with comments removed):
+The complete Dockerfile should now look like this:
 
 ```
 FROM cgr.dev/chainguard/python:latest-dev
@@ -169,7 +173,8 @@ kubectl scale deployment thumbnailer --replicas=1
 Let's try checking the user again. First get the pod name again, as it will have changed in the restart:
 
 ```bash
-kubectl get pods
+POD_NAME=$(kubectl get pods --no-headers -o custom-columns=":metadata.name" | grep thumbnailer)
+kubectl get pods $POD_NAME
 ```
 
 Which gave me:
@@ -177,7 +182,6 @@ Which gave me:
 ```
 NAME                           READY   STATUS    RESTARTS   AGE
 thumbnailer-6cc796bd56-sfpfd   1/1     Running   0          32s
-todolist-778ddc9684-kfjgm      1/1     Running   0          141m
 ```
 
 The `ps` implementation in the Chainguard image is a little different, so we don't need the
@@ -198,5 +202,5 @@ PID   USER     TIME  COMMAND
 
 Mission accomplished! 
 
-We are now using a production webserver and have all processes running as "nonroot", which is a significant boost
+We are now using a production webserver and have all processes running as "non-root", which is a significant boost
 to security.
