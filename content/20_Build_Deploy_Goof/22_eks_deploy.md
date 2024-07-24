@@ -40,7 +40,7 @@ snyk-aws          Active   113s
 
 ## Deploy the applications
 
-> **:warning:**
+**:warning:**
 > This workshop deploys a Log4Shell exploit server. This should never be run in a Production Environment. Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.
 
 
