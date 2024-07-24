@@ -119,4 +119,4 @@ Services in this namespace will not get external IP's as they are not running as
 
 ## Success!
 
-If you got here without issues, you've successfully built and deployed all of the applications and they are now live on EKS. We can open and interact with it, and while they looks harmless enough! In the next module we'll demonstrate how a vulnerable open source compoenents can create an invisible risk that can comprimise our application.
+If you got here without issues, you've successfully built and deployed all of the applications and they are now live on EKS. We can open and interact with it, and while they looks harmless enough! In the next module we'll demonstrate how a vulnerable open source components can create an invisible risk that can compromise our application.
