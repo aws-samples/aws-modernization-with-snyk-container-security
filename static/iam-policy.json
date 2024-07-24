@@ -2,85 +2,35 @@
   "Version": "2012-10-17",
   "Statement": [
     {
-      "Resource": "*",
-      "Action": [
-        "application-autoscaling:*",
-        "autoscaling-plans:*",
-        "autoscaling:*",
-        "cloud9:*",
-        "cloudformation:*",
-        "cloudtrail:*",
-        "cloudwatch:*",
-        "ec2:*",
-        "ecr:*",
-        "ecs:*",
-        "elasticloadbalancing:*",
-        "iam:*",
-        "logs:*",
-        "s3:*",
-        "secretsmanager:*",
-        "ssm:*",
-        "ssmmessages:*",
-        "tag:*",
-        "xray:*",
-        "wafv2:*",
-        "eks:*",
-        "codepipeline:*",
-        "codebuild:*",
-        "codecommit:*"
-      ],
       "Effect": "Allow",
-      "Sid": "AllReaperSupportedServices"
-    },
-    {
-      "Condition": {
-        "StringLike": {
-          "ec2:InstanceType": [
-            "*6xlarge",
-            "*8xlarge",
-            "*10xlarge",
-            "*12xlarge",
-            "*16xlarge",
-            "*18xlarge",
-            "*24xlarge",
-            "f1.4xlarge",
-            "x1*",
-            "z1*",
-            "*metal"
-          ]
-        }
-      },
-      "Resource": [
-        "arn:aws:ec2:*:*:instance/*"
-      ],
-      "Action": "ec2:RunInstances",
-      "Effect": "Deny",
-      "Sid": "DenyXXLInstances"
-    },
-    {
-      "Resource": "*",
       "Action": [
-        "ec2:ModifyReservedInstances",
-        "ec2:PurchaseHostReservation",
-        "ec2:PurchaseReservedInstancesOffering",
-        "ec2:PurchaseScheduledInstances",
-        "rds:PurchaseReservedDBInstancesOffering",
-        "dynamodb:PurchaseReservedCapacityOfferings"
+        "cloud9:GetMigrationExperiences",
+        "cloud9:ListEnvironments",
+        "cloud9:UpdateUserSettings",
+        "ec2:DescribeRegions"
       ],
-      "Effect": "Deny",
-      "Sid": "DontBuyReservationsPlz"
+      "Resource": "*"
     },
     {
-      "Resource": "{{.ParticipantRoleArn}}",
-      "Action": "iam:PassRole",
       "Effect": "Allow",
-      "Sid": "PassRole"
+      "Action": [
+        "cloud9:DescribeEC2Remote",
+        "cloud9:DescribeEnvironmentMemberships",
+        "cloud9:DescribeEnvironmentStatus",
+        "cloud9:DescribeEnvironments",
+        "cloud9:GetEnvironmentConfig",
+        "cloud9:GetEnvironmentSettings",
+        "cloud9:ListTagsForResource",
+        "cloud9:UpdateEnvironment",
+        "cloud9:UpdateEnvironmentSettings",
+        "cloud9:UpdateMembershipSettings"
+      ],
+      "Resource": "arn:aws:cloud9:${Region}:${Account}:environment/${ResourceId}"
     },
     {
-      "Resource": "*",
-      "Action": "cloud9:UpdateEnvironment",
-      "Effect": "Deny",
-      "Sid": "DenyC9EnvironmentUpdate"
+      "Effect": "Allow",
+      "Action": "kms:Decrypt",
+      "Resource": "arn:aws:kms:${Region}:${Account}:key/${KeyId}"
     }
   ]
 }
