@@ -45,11 +45,9 @@ awsAccountConfig:
       - static/iam-policy.json
     managedPolicies:
       - "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
-      - "arn:aws:iam::aws:policy/AdministratorAccess"
     trustedPrincipals:
       service:
         - ec2.amazonaws.com
-        - codebuild.amazonaws.com
         - lambda.amazonaws.com
   regionConfiguration:
     minAccessibleRegions: 1
