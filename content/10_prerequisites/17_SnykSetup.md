@@ -47,10 +47,10 @@ In both AWS-hosted events and self-paced environments, you will need to authenti
 
 In the KEY field, click your “click to show” box to copy your Auth token.
 
-You can then run this command where AUTH_TOKEN is the value you copied.
+You can then run this command where REPLACE_ME is the value you copied.
 
 ```bash
-snyk auth YOUR_AUTH_TOKEN
+snyk auth REPLACE_ME
 ```
 
 That should be it!  Your response should look like the following:
