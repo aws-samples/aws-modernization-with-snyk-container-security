@@ -25,12 +25,12 @@
         "cloud9:UpdateEnvironmentSettings",
         "cloud9:UpdateMembershipSettings"
       ],
-      "Resource": "arn:aws:cloud9:${Region}:${Account}:environment/${ResourceId}"
+      "Resource": "*"
     },
     {
       "Effect": "Allow",
       "Action": "kms:Decrypt",
-      "Resource": "arn:aws:kms:${Region}:${Account}:key/${KeyId}"
+      "Resource": "*"
     }
   ]
 }
