@@ -113,7 +113,7 @@ NAME                                  DESIRED   CURRENT   READY   AGE
 replicaset.apps/log4shell-7d8c6fbfd   1         1         1       154m
 replicaset.apps/log4shell-fc6565dbc   1         1         0       2m2s
 ```
-### 📖 Services in this namespace will not get external IP's as they are not running as a loadbalancer type.
+📖 **Services in this namespace will not get external IP's as they are not running as a loadbalancer type.**
 
 ## Success!
 
