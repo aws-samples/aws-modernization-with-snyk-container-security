@@ -38,7 +38,7 @@ kube-system       Active   124m
 snyk-aws          Active   113s
 ```
 
-## :warning: **WARNING**
+:warning: **WARNING**
 
 This workshop deploys a Log4Shell exploit server. This should never be ran in a Production Environment! Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.
 
