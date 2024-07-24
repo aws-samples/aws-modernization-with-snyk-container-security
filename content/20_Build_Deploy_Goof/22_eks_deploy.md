@@ -40,7 +40,7 @@ snyk-aws          Active   113s
 
 ## Deploy the applications
 
-> [!CAUTION]
+> **:warning:**
 > This workshop deploys a Log4Shell exploit server. This should never be run in a Production Environment. Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.
 
 
@@ -114,7 +114,7 @@ NAME                                  DESIRED   CURRENT   READY   AGE
 replicaset.apps/log4shell-7d8c6fbfd   1         1         1       154m
 replicaset.apps/log4shell-fc6565dbc   1         1         0       2m2s
 ```
-> [!NOTE]
+:blue_book:
 > Services in this namespace will not get external IP's as they are not running as a loadbalancer type.
 
 ## Success!
