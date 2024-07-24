@@ -40,8 +40,8 @@ snyk-aws          Active   113s
 
 ## Deploy the applications
 
-[!CAUTION]
-This workshop deploys a Log4Shell exploit server. This should never be ran in a Production Environment. Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.
+> [!CAUTION]
+> This workshop deploys a Log4Shell exploit server. This should never be run in a Production Environment. Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.
 
 
 Ensure the `REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
@@ -114,8 +114,8 @@ NAME                                  DESIRED   CURRENT   READY   AGE
 replicaset.apps/log4shell-7d8c6fbfd   1         1         1       154m
 replicaset.apps/log4shell-fc6565dbc   1         1         0       2m2s
 ```
-[!NOTE]
-Services in this namespace will not get external IP's as they are not running as a loadbalancer type.
+> [!NOTE]
+> Services in this namespace will not get external IP's as they are not running as a loadbalancer type.
 
 ## Success!
 
