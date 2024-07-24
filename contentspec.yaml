@@ -48,7 +48,6 @@ awsAccountConfig:
     trustedPrincipals:
       service:
         - ec2.amazonaws.com
-        - lambda.amazonaws.com
   regionConfiguration:
     minAccessibleRegions: 1
     maxAccessibleRegions: 3
