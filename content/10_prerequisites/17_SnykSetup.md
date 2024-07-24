@@ -50,7 +50,7 @@ In the KEY field, click your “click to show” box to copy your Auth token.
 You can then run this command where AUTH_TOKEN is the value you copied.
 
 ```bash
-snyk auth <YOUR_AUTH_TOKEN>
+snyk auth YOUR_AUTH_TOKEN
 ```
 
 That should be it!  Your response should look like the following:
