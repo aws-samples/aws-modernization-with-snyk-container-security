@@ -3,16 +3,14 @@ title: "Create a workspace"
 chapter: false
 weight: 12
 ---
-
-{{% notice warning %}}
-The Cloud9 workspace should be built by an IAM user with Administrator privileges,
+::alert[The Cloud9 workspace should be built by an IAM user with Administrator privileges,
 not the root account user. Please ensure you are logged in as an IAM user, not the root
 account user.
-{{% /notice %}}
 
 Ad blockers, javascript disablers, and tracking blockers should be disabled for
 the cloud9 domain, or connecting to the workspace might be impacted.
-Cloud9 requires third-party-cookies. You can whitelist the [specific domains]( https://docs.aws.amazon.com/cloud9/latest/user-guide/troubleshooting.html#troubleshooting-env-loading).
+Cloud9 requires third-party-cookies. You can whitelist the [specific domains]( https://docs.aws.amazon.com/cloud9/latest/user-guide/troubleshooting.html#troubleshooting-env-loading).]
+
 
 ### Launch Cloud9:
 Create a Cloud9 Environment: [https://console.aws.amazon.com/cloud9/home](https://console.aws.amazon.com/cloud9/home)
