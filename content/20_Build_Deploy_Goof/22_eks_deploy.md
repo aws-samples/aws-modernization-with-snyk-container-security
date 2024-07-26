@@ -39,7 +39,7 @@ snyk-aws          Active   113s
 ```
 
 ## 🚨 **WARNING** 🚨 
-::alert[This workshop deploys a Log4Shell exploit server. This should never be ran in a Production Environment! Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.]
+::alert[This workshop deploys a Log4Shell exploit server. This should never be ran in a Production Environment! Please ensure you understand the security implications and have taken appropriate precautions. Use in a controlled, isolated environment to avoid any unintended security risks.]{type="warning"}
 
 ## Deploy the applications
 Ensure the `REPO` variable is still set from the build step and run this command. (it uses the `envsubst` utilities to plug your ECR repository server into each of the deployment's image tags)
