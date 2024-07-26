@@ -5,7 +5,7 @@ weight: 1
 ---
 
 {{% notice warning %}}
-::alert[Your account must have the ability to create new IAM roles and scope other IAM permissions.]{type="info"}
+Your account must have the ability to create new IAM roles and scope other IAM permissions.
 {{% /notice %}}
 
 1. If you don't already have an AWS account with Administrator access: [create
