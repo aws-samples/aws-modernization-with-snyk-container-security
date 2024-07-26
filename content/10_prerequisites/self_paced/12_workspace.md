@@ -10,11 +10,9 @@ not the root account user. Please ensure you are logged in as an IAM user, not t
 account user.
 {{% /notice %}}
 
-{{% notice tip %}}
 Ad blockers, javascript disablers, and tracking blockers should be disabled for
 the cloud9 domain, or connecting to the workspace might be impacted.
 Cloud9 requires third-party-cookies. You can whitelist the [specific domains]( https://docs.aws.amazon.com/cloud9/latest/user-guide/troubleshooting.html#troubleshooting-env-loading).
-{{% /notice %}}
 
 ### Launch Cloud9:
 Create a Cloud9 Environment: [https://console.aws.amazon.com/cloud9/home](https://console.aws.amazon.com/cloud9/home)
