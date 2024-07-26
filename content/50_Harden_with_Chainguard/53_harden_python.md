@@ -74,8 +74,8 @@ To:
 ENTRYPOINT ["gunicorn"]
 CMD ["--bind", "0.0.0.0:5000", "webapp:app"]
 ```
-## **:bulb:** **TIP**
-Dont forget to save your Dockerfile!
+## 💡 **TIP**
+Dont forget to save the Dockerfile!
 
 ## Don't Run as Root
 
@@ -127,8 +127,8 @@ Remove the `/` so that it becomes:
 ```docker
 RUN mkdir uploads
 ```
-## **:bulb:** **TIP**
-Dont forget to save your Dockerfile!
+## 💡 **TIP**
+Dont forget to save the Dockerfile!
 
 Chainguard images come with the nonroot user predefined, so we don't have to create a new user. The
 `USER` instruction will take effect for subsequent lines in the Dockerfile and when the container is
