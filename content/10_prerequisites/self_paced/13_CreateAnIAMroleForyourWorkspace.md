@@ -4,7 +4,9 @@ chapter: true
 weight: 13
 ---
 
-# Create a policy for your Cloud9 IAM Role [this link](https://console.aws.amazon.com/iamv2/home#/policies/create)
+# Create a policy for your Cloud9 IAM Role 
+
+[Click this link to create your IAM Policy](https://console.aws.amazon.com/iamv2/home#/policies/create)
 
 Click on `Json` and delete the existing blank policy and paste the contents below in the policy editor:
 
