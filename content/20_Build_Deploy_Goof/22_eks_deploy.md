@@ -73,10 +73,8 @@ replicaset.apps/goof-7bd8895c4d          1         1         1       19s
 replicaset.apps/thumbnailer-6cc495969b   1         1         1       19s
 ```
 
-{{% notice info %}}
-The pods should all show **"Running"** in their **STATUS** field, and services with a **LoadBalancer** type should have an IP or hostname for their **EXTERNAL-IP**.
-<br>If either show a pending state, then wait a moment and re-run the command until they finish starting up. 
-{{% /notice %}}
+
+::alert[The pods should all show **"Running"** in their **STATUS** field, and services with a **LoadBalancer** type should have an IP or hostname for their **EXTERNAL-IP**. If either show a pending state, then wait a moment and re-run the command until they finish starting up.]{type="info"}
 
 The following will save the `LoadBalancer` services `EXTERNAL_IP` values for later use:
 ```bash
