@@ -185,21 +185,17 @@ Click on `Json` and delete the existing blank policy and paste the contents belo
 ```
 
 Click on Json:
-
 ![aws-iam-policy-json](/images/click-json-policy.png)
 
 Click Next:
-
 ![aws-iam-policy-json-next](/images/click-next-policy.png)
 
 Name the policy: `workshop-cloud9`
 
 You can optinally provide a description if you like.
-
 ![aws-iam-policy-name](/images/policy-name.png)
 
 Create the policy:
-
 ![aws-iam-policy-name](/images/create-policy.png)
 
 
@@ -225,7 +221,6 @@ Next, add the workshop-cloud9 permissions policy.
 1. Search for `workshop-cloud9` to filter results
 1. Check the box for workshop-cloud9
 1. Click on Next below
-
 ![aws-iam-role-step-2](/images/add-permissions.png)
 
 ## Name, review, and create
@@ -233,11 +228,9 @@ Next, add the workshop-cloud9 permissions policy.
 Name your role `workshop-cloud9-role`
  
 NOTE: in your environment, you would enter a description and tags per your company guidelines.
-
 ![aws-iam-role-step-3](/images/name-role.png)
 
 Create Role
-
 ![aws-iam-role-step-3](/images/create-role.png)
 
 
