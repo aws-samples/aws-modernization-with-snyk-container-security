@@ -230,7 +230,8 @@ Next, add the workshop-cloud9 permissions policy.
 
 ## Name, review, and create
 
- Name your role `workshop-cloud9-role`
+Name your role `workshop-cloud9-role`
+ 
 NOTE: in your environment, you would enter a description and tags per your company guidelines.
 
 ![aws-iam-role-step-3](/images/name-role.png)
