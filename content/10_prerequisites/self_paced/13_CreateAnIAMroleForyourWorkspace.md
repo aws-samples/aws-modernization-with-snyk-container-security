@@ -222,20 +222,20 @@ Follow [this link](https://console.aws.amazon.com/iamv2/home#/roles/create) to c
 
 Next, add the workshop-cloud9 permissions policy.
 
-2. Search for `workshop-cloud9` to filter results
-2. Check the box for workshop-cloud9
-2. Click on Next below
+1. Search for `workshop-cloud9` to filter results
+1. Check the box for workshop-cloud9
+1. Click on Next below
 
 ![aws-iam-role-step-2](/images/add-permissions.png)
 
 ## Name, review, and create
 
-3. Name your role `workshop-cloud9-role`
+ Name your role `workshop-cloud9-role`
 NOTE: in your environment, you would enter a description and tags per your company guidelines.
 
 ![aws-iam-role-step-3](/images/name-role.png)
 
-3.Create Role
+Create Role
 
 ![aws-iam-role-step-3](/images/create-role.png)
 
