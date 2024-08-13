@@ -497,7 +497,6 @@ Resources:
       Name: 
         Ref: C9Name
       OwnerArn: !If [RunonWorkshopStudio, !Sub "arn:aws:iam::${AWS::AccountId}:assumed-role/WSParticipantRole/Participant", !Ref "AWS::NoValue" ]
-      ManagedCredentialsAction: DISABLE
       Tags: 
         - 
           Key: SSMBootstrap
@@ -508,6 +507,38 @@ Resources:
         - 
           Key: Instance
           Value: Cloud9
+
+################## DISABLE MANAGED CREDENTIALS #####################
+
+  DisableManagedCredentialsLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: index.lambda_handler
+      Runtime: python3.8
+      Role: !GetAtt C9LambdaExecutionRole.Arn
+      Timeout: 60
+      Code:
+        ZipFile: |
+          import boto3
+          import os
+
+          def lambda_handler(event, context):
+              client = boto3.client('cloud9')
+              environment_id = os.environ['C9EnvironmentId']
+              client.update_environment(
+                  environmentId=environment_id,
+                  managedCredentialsAction='DISABLE'
+              )
+      Environment:
+        Variables:
+          C9EnvironmentId: !Ref C9Instance
+
+  DisableManagedCredentialsInvoke:
+    Type: Custom::DisableManagedCredentials
+    DependsOn: C9Instance
+    Properties:
+      ServiceToken: !GetAtt DisableManagedCredentialsLambda.Arn
+      
 
 ################## EKS Bootstrap #####################
 
