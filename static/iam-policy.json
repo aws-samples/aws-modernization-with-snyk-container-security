@@ -39,6 +39,11 @@
     },
     {
       "Effect": "Allow",
+      "Action": "eks:DescribeCluster",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
       "Action": [
         "ecr:BatchCheckLayerAvailability",
         "ecr:BatchDeleteImage",
