@@ -39,7 +39,10 @@
     },
     {
       "Effect": "Allow",
-      "Action": "eks:DescribeCluster",
+      "Action": [
+        "eks:DescribeCluster",
+        "eks:ListClusters"
+      ],
       "Resource": "*"
     },
     {
