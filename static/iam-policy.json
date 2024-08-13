@@ -52,6 +52,7 @@
         "ecr:GetDownloadUrlForLayer",
         "ecr:GetLifecyclePolicy",
         "ecr:GetLifecyclePolicyPreview",
+        "ecr:GetRegistryScanningConfiguration",
         "ecr:GetRepositoryPolicy",
         "ecr:InitiateLayerUpload",
         "ecr:DescribeImages",
