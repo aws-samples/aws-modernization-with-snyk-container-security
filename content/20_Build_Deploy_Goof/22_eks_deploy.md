@@ -7,9 +7,12 @@ weight = 22
 
 For the purpose of this workshop, we have created an Amazon EKS cluster on which we will run the "Goof apps" and you will now deploy the applications that we have built on it.
 
-## Update the Kubeconfig file
+## Update the Kubeconfig file & Cloud9 Instance Role
 
 ```sh
+# update Cloud9 Instance to use Instance Role
+aws cloud9 update-environment  --environment-id $C9_PID --managed-credentials-action DISABLE
+
 # update kubeconfig file
 aws eks update-kubeconfig --name $(aws eks list-clusters --query 'clusters[0]' --output text)
 ```
