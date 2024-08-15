@@ -415,8 +415,7 @@ Resources:
                 - sudo apt-get -y install pngcrush
                 - sudo apt-get -y install moreutils
                 - echo '=== Disable temporary managed credentials ==='
-                - !Sub |
-                    aws cloud9 update-environment --environment-id $C9_PID --managed-credentials-action DISABLE --region ${AWS::Region} &> /dev/null
+                - !Sub aws cloud9 update-environment --environment-id $C9_PID --managed-credentials-action DISABLE --region ${AWS::Region} &> /dev/null
                 - echo 'Removing AWS credentials files to ensure instance role is used' | tee -a /home/ubuntu/.bash_profile
                 - echo 'rm -vf ${HOME}/.aws/credentials &> /dev/null' | tee -a /home/ubuntu/.bash_profile
                 - echo 'rm -vf ${HOME}/.aws/config &> /dev/null' | tee -a /home/ubuntu/.bash_profile
