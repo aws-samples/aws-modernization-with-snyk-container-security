@@ -34,7 +34,7 @@ After each finishes you should get a JSON reponse similar to the following:
 }
 ```
 {{% notice tip %}}
-If you need to re-retrieve your repository info in the future, you can run `aws ecr describe-repositories` to get a list of all of them.
+Press `q` to exit the details of each created repository. If you need to retrieve your repository information in the future, you can run the command aws ecr describe-repositories to get a list of all your repositories.
 {{% /notice %}}
 
 In the response we want to copy the hostname part of the `repositoryUri` (not including the '/' and anything after it) and paste it into command below which will store it in an environment variable for future use. Fortunately, those values are available in environment variables so this command collect them and store them in a `REPO`` variable for our use in later steps:
