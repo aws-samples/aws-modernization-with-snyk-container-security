@@ -96,7 +96,7 @@ docker push $REPO/log4shell-server:latest
 
 ```
 
-Once the pushes complete, log in to your [ECR repositories](https://console.aws.amazon.com/ecr/repositories) to see your new image repositories. 
+Once the pushes complete, log in to your [ECR repositories](console.aws.amazon.com/ecr/private-registry/repositories) to see your new image repositories. 
 
 ![ecr-repos](/images/ecr-repos.png)
 
