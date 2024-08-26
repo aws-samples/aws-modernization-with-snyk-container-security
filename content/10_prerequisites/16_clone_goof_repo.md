@@ -19,12 +19,12 @@ We recommend you make your copy have "public" visibility, it will simplify worki
 
 ![gh-create-copy](/images/gh-create-copy.png)
 
-To copy-paste the commands in the instructions set an environment variable with your GitHub ID. Your GitHub ID is displayed in the upper right corner in [GitHub.com](github.com).
+To copy-paste the commands in the instructions set an environment variable with your GitHub ID. Your GitHub ID is displayed in the upper right corner in [GitHub.com](github.com). Replace the REPLACE_ME value with your GitHub ID.
 
 ![gh-id](/images/gh-id.png)
 
 ```sh
-GithubId=<your_github_id>
+GithubId=REPLACE_ME
 ```
 
 ## Clone the repo
