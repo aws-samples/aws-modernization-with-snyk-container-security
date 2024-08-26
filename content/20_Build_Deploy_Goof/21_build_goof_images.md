@@ -60,8 +60,13 @@ This should return a `Login Succeeded` repsonse.
 
 Now we will build the images. Be sure you are cd'ed into the cloned goof repo directory. (if you just completed the prerequisite sections, you might still be in the `cloud9-setup` sub-directory so run `cd ..` if needed.)
 
+```sh
+cd ~/environment/goof
+```
+
 Once you are in the right directory, run the following commands to build the container images.
 ```sh
+
 docker build -t $REPO/thumbnailer:latest thumbnailer
 
 docker build -t $REPO/todolist:latest todolist
