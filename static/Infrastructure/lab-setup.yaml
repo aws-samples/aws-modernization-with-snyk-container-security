@@ -118,6 +118,7 @@ Resources:
             - cloudformation:DescribeStackResource
             - cloudformation:DescribeStackResources
             - ec2:DescribeInstances
+            - ec2:DescribeInstanceTypeOfferings
             - ec2:AssociateIamInstanceProfile
             - ec2:ModifyInstanceAttribute
             - ec2:ReplaceIamInstanceProfileAssociation
