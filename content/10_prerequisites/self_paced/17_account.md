@@ -68,7 +68,7 @@ After the stack status changes to `CREATE_COMPLETE`, the VS Code server resource
 
    ![Create Stack Process](/images/cloudformation-create-process.png)  
 
-Once the stack status changes to `CREATE_COMPLETE`, the resources for the Akuity x AWS Workshop are ready.  
+Once the stack status changes to `CREATE_COMPLETE`, the resources for the Snyk x AWS Workshop are ready.  
 
 ---
 
