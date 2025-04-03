@@ -22,7 +22,7 @@ additionalLinks:
 infrastructure:
   cloudformationTemplates:
     - templateLocation: static/infrastructure/vscode-server.yaml
-      label: Akuity Workshop Vscode Server
+      label: Snyk Workshop Vscode Server
       participantVisibleStackOutputs:
         - VSCODEURL
         - Password
