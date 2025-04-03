@@ -15,7 +15,7 @@ weight: 18
   - **VSCODEURL**: This is the URL to access the VS Code server.
   - **Password**: This is the password required to log in to the server.
 
-![CloudFormation Outputs](/images/cloudformation-outputs.png)
+![CloudFormation Outputs](/images/event-output.png)
 
 ## Step 2: Copy the Password
 
