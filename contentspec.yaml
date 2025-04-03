@@ -21,16 +21,15 @@ additionalLinks:
 # START Infrastructure
 infrastructure:
   cloudformationTemplates:
-    - templateLocation: static/Infrastructure/lab-setup.yaml
-      label: EKS Workshop Environment
+    - templateLocation: static/infrastructure/vscode-server.yaml
+      label: Akuity Workshop Vscode Server
+      participantVisibleStackOutputs:
+        - VSCODEURL
+        - Password
+        
+    - templateLocation: static/infrastructure/testing.yaml
+      label: EKS Cluster for Snyk Container Workshop
 
-      parameters:
-
-          # The parameter name present in the corresponding CloudFormation template
-        - templateParameter: WorkshopStudioRun
-          defaultValue: "true"
-        - templateParameter: C9InstanceVolumeSize
-          defaultValue: 50
 
 # END Infrastructure
 
@@ -45,9 +44,12 @@ awsAccountConfig:
       - static/iam-policy.json
     managedPolicies:
       - "arn:aws:iam::aws:policy/IAMReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/AdministratorAccess"
     trustedPrincipals:
       service:
         - ec2.amazonaws.com
+        - codebuild.amazonaws.com
+        - lambda.amazonaws.com
   regionConfiguration:
     minAccessibleRegions: 1
     maxAccessibleRegions: 3
