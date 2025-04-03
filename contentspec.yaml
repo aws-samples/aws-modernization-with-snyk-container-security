@@ -27,7 +27,7 @@ infrastructure:
         - VSCODEURL
         - Password
         
-    - templateLocation: static/infrastructure/testing.yaml
+    - templateLocation: static/infrastructure/eks-cluster.yaml
       label: EKS Cluster for Snyk Container Workshop
 
 

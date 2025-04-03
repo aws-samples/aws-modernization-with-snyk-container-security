@@ -1,3 +1,4 @@
+---
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Create a VSCode code-server instance with an Amazon CloudFront distribution for use in Workshop Studio
 
