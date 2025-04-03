@@ -13,7 +13,7 @@ Included in this environment will be a Cloud9 IDE and an EKS Kubernetes cluster 
 If you are currently logged in to an AWS Account, you can log out using this [link](https://console.aws.amazon.com/console/logout!doLogout)
 {{% /notice %}}
 
-### Logging into Event Engine Dashboard
+### Logging into Workshop Studio Dashboard
 
 1. Connect to the portal by clicking the button or browsing to [https://catalog.us-east-1.prod.workshops.aws/](https://catalog.us-east-1.prod.workshops.aws/). The following screen shows up. Enter the provided hash in the text box.
 
@@ -33,4 +33,4 @@ This account will expire at the end of the workshop and  all the resources creat
 
 ### Next step
 
-Once you have completed the step above, you can leave the AWS console open. You can now move to the [next step](/10_prerequisites/aws_event/11_cloud9-setup.html) and begin setup of your Cloud9 environment.
+Once you have completed the step above, you can leave the AWS console open. You can now move to the next step and begin to access your VS Code environment.
