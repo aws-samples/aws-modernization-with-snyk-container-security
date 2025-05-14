@@ -28,17 +28,17 @@ GithubId=REPLACE_ME
 ```
 
 ## Clone the repo
-After you create the Repo, clone the Repo to your Cloud9 environment by using the `git clone` command. Once the clone completes, change to the repo's top level directory. 
+After you create the Repo, clone the Repo to your VS Code Server environment by using the `git clone` command. Once the clone completes, change to the repo's top level directory. 
 
 ```sh
 git clone https://github.com/$GithubId/goof && cd goof
 ```
 
-This copies the Repo files to your Cloud9 environment. 
+This copies the Repo files to your VS Code Server environment. 
 
 
 ## Run setup scripts
-If you are running this workshop through an AWS Hosted Event, these tools have already been installed. However if you are self-paced, there are a couple of setup scripts in the `cloud9-setup` directory you should run:
+If you are running this workshop through an AWS Hosted Event, these tools have already been installed. However if you are self-paced, there are a couple of setup scripts in the `cloud9-setup` directory (note: despite the name, these scripts should be run in your VS Code Server environment) you should run:
 
 ### Tool setup
 The `setup.sh` script installs and/or updates the following tools:

@@ -16,8 +16,8 @@ aws cloudformation delete-stack --stack-name $(aws cloudformation list-stacks --
 If you have completed this workshop under your own account, you can follow these steps to remove all of the workshop resources:
 
 ```bash
-# Delete Cloud9 Instance
-aws cloud9 delete-environment --region us-west-2 --environment-id $(aws cloud9 list-environments --region us-west-2 --query "environmentIds[?contains(@, 'Snyk-Workshop')]" --output text)
+# Delete VS Code Server Instance
+aws cloudformation delete-stack --stack-name vscode-server --region us-west-2
 
 # Delete ECR Registries
 aws ecr delete-repository --repository-name thumbnailer --force --region us-west-2 && \

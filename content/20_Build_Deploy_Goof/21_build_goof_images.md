@@ -37,9 +37,9 @@ After each finishes you should get a JSON reponse similar to the following:
 Press `q` to exit the details of each created repository. If you need to retrieve your repository information in the future, you can run the command aws ecr describe-repositories to get a list of all your repositories.
 {{% /notice %}}
 
-In the response we want to copy the hostname part of the `repositoryUri` (not including the '/' and anything after it) and paste it into command below which will store it in an environment variable for future use. Fortunately, those values are available in environment variables so this command collect them and store them in a `REPO`` variable for our use in later steps:
+In the response we want to copy the hostname part of the `repositoryUri` (not including the '/' and anything after it) and paste it into command below which will store it in an environment variable for future use. Fortunately, those values are available in environment variables so this command collect them and store them in a `REPO` variable for our use in later steps:
 ```sh
-export REPO=$AWS_ACCOUNT_ID.dkr.ecr.$AWS_REGION.amazonaws.com
+export REPO=$AWS_ACCOUNTID.dkr.ecr.$AWS_REGION.amazonaws.com
 echo $REPO
 ```
 
@@ -61,7 +61,7 @@ This should return a `Login Succeeded` repsonse.
 Now we will build the images. Be sure you are cd'ed into the cloned goof repo directory. (if you just completed the prerequisite sections, you might still be in the `cloud9-setup` sub-directory so run `cd ..` if needed.)
 
 ```sh
-cd ~/environment/goof
+cd /Workshop/goof
 ```
 
 Once you are in the right directory, run the following commands to build the container images.

@@ -4,9 +4,9 @@ chapter = false
 weight = 44
 +++
 
-## Update your Cloud9 working branch
+## Update your VS Code Server working branch
 
-Back in Cloud9, pull the latest changes, including the Snyk Fix, to the working environment.
+Back in VS Code Server, pull the latest changes, including the Snyk Fix, to the working environment.
 
 ```sh
 git pull
