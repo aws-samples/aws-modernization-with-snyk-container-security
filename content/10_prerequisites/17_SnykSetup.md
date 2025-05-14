@@ -31,10 +31,10 @@ Start by downloading the Snyk CLI to your environment. In this workshop, we’ll
 https://docs.snyk.io/snyk-cli/install-the-snyk-cli
 
 ### **Note:**
-If you are running this through an AWS Hosted Event, the Snyk CLI has already been installed on your Cloud9 instance.
+If you are running this through an AWS Hosted Event, the Snyk CLI has already been installed on your VS-Code Server instance.
 
 ### Installing Snyk CLI
-If you are running this workshop at your own pace, you will need to install the Snyk CLI yourself. At the Cloud9 prompt, enter these commands to download the binary for Linux and move them to your bin folder (/usr/local/bin):
+If you are running this workshop at your own pace, you will need to install the Snyk CLI yourself. At the prompt, enter these commands to download the binary for Linux and move them to your bin folder (/usr/local/bin):
 
 ```bash
 curl -Lo ./snyk https://static.snyk.io/cli/latest/snyk-linux-arm64 && \
@@ -59,7 +59,7 @@ That should be it!  Your response should look like the following:
 
     Your account has been authenticated. Snyk is now ready to be used.
 
-If you are not on a Cloud9 environment, then your CLI should be able to start up a web browser and you can authenticate with this command:
+If you are not using the VS-Code Server environment, then your CLI should be able to start up a web browser and you can authenticate with this command:
 
 ```bash
 snyk auth
