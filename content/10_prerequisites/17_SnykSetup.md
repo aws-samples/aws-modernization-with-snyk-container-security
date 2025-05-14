@@ -37,7 +37,7 @@ If you are running this through an AWS Hosted Event, the Snyk CLI has already be
 If you are running this workshop at your own pace, you will need to install the Snyk CLI yourself. At the Cloud9 prompt, enter these commands to download the binary for Linux and move them to your bin folder (/usr/local/bin):
 
 ```bash
-curl https://static.snyk.io/cli/latest/snyk-linux -o snyk && \
+curl -Lo ./snyk https://static.snyk.io/cli/latest/snyk-linux-arm64 && \
 chmod +x ./snyk && \
 sudo mv ./snyk /usr/local/bin/
 ```
